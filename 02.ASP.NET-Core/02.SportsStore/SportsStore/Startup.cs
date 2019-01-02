@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ namespace SportsStore
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 _configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, DbProductRepository>();
+            services.AddScoped(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
