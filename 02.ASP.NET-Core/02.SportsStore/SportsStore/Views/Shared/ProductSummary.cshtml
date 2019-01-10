@@ -7,10 +7,10 @@
             <small>@Model.Price.ToString("c")</small>
         </span>
     </h4>
-    <div class="container card-text p-1">
+    <div class="card-text p-1">
         <div class="row align-items-center justify-content-between">
-            <span class="col-11">@Model.Description</span>
-            <form class="col-1 float-right"
+            <span class="col">@Model.Description</span>
+            <form class="col float-right"
                   asp-action="AddToCart"
                   asp-controller="Cart"
                   method="post">
