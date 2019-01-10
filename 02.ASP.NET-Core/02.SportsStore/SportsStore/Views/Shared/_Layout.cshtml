@@ -10,14 +10,15 @@
     <title>SportsStore</title>
 </head>
 <body>
-    <div class="navbar navbar-dark bg-dark row justify-content-between" role="navigation">
-        <div class="col-4">
-            <a class="navbar-brand" href="#">SPORTS STORE</a>
+    <div class="navbar navbar-dark bg-dark" role="navigation">
+        <div class="row justify-content-between" style="flex-grow: 1">
+            <div class="col">
+                <a class="navbar-brand" href="#">SPORTS STORE</a>
+            </div>
+            <div class="col text-right">
+                @await Component.InvokeAsync("CartSummary")
+            </div>
         </div>
-        <div class="col-4 text-right">
-            @await Component.InvokeAsync("CartSummary")
-        </div>
-    </div>
     </div>
 
     <div class="row m-1 p-1">
