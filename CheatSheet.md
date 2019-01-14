@@ -12,3 +12,7 @@
 - Command-line tool: `dotnet ef`
 	- Initial migration: `dotnet ef migrations add Initial`
 	 
+
+## ASP.NET Core MVC
+- Client-side validation: https://github.com/aspnet/jquery-validation-unobtrusive/
+	- Fails for float and decimal for non english format: https://github.com/aspnet/jquery-validation-unobtrusive/issues/27
