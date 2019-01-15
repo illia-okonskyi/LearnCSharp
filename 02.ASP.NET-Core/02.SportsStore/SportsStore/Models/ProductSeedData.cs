@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SportsStore.Models
 {
-    public class SeedData
+    public class ProductSeedData
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
