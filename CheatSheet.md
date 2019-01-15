@@ -16,3 +16,5 @@
 ## ASP.NET Core MVC
 - Client-side validation: https://github.com/aspnet/jquery-validation-unobtrusive/
 	- Fails for float and decimal for non english format: https://github.com/aspnet/jquery-validation-unobtrusive/issues/27
+
+- DI: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
