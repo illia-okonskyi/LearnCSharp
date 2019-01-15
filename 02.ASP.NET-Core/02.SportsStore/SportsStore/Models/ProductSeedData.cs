@@ -1,19 +1,17 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace SportsStore.Models
 {
     public class ProductSeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IServiceProvider services)
         {
-            ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-            context.Database.Migrate();
-            if (!context.Products.Any())
+            var dbContext = services.GetRequiredService<ApplicationDbContext>();
+            if (!dbContext.Products.Any())
             {
-                context.Products.AddRange(
+                dbContext.Products.AddRange(
                     new Product
                     {
                         Name = "Kayak",
@@ -77,7 +75,7 @@ namespace SportsStore.Models
                         Category = "Chess",
                         Price = 120
                     });
-                context.SaveChanges();
+                dbContext.SaveChanges();
             }
         }
     }

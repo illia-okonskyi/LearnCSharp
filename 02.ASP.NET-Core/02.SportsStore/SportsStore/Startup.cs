@@ -76,9 +76,6 @@ namespace SportsStore
                     name: null,
                     template: "{controller=Product}/{action=List}/{id?}");
             });
-
-            ProductSeedData.EnsurePopulated(app);
-            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

@@ -15,6 +15,13 @@ namespace SportsStore.Controllers
             _productRepository = productRepository;
         }
 
+        [HttpPost]
+        public IActionResult SeedDatabase()
+        {
+            ProductSeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
+        }
+
         public ViewResult Index() => View(_productRepository.Products);
 
         public ViewResult Edit(int productId)
