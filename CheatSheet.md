@@ -22,3 +22,6 @@
 ## Tips & Tricks
 - Performance Tuning for .NET Core: https://reubenbond.github.io/posts/dotnet-perf-tuning
 - All About Span: Exploring a New .NET Mainstay: https://msdn.microsoft.com/en-us/magazine/mt814808.aspx
+
+## Manuals and guidelines
+- C# frameworks manuals and guidelines on Russian: https://metanit.com/sharp/
