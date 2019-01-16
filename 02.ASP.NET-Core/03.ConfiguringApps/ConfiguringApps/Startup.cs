@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ConfiguringApps.Infrastructure;
+using ConfiguringApps.Infrastructure.Middleware;
 
 namespace ConfiguringApps
 {
@@ -15,6 +16,10 @@ namespace ConfiguringApps
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMiddleware<ResponseEditingMiddleware>();
+            app.UseMiddleware<RequestEditingMiddleware>();
+            app.UseMiddleware<ShortCircuitMiddleware>();
+            app.UseMiddleware<ContentMiddleware>();
             app.UseMvcWithDefaultRoute();
         }
     }
