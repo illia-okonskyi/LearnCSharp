@@ -18,6 +18,7 @@
 	- Fails for float and decimal for non english format: https://github.com/aspnet/jquery-validation-unobtrusive/issues/27
 
 - DI: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
+- Example write logs to file: https://andrewlock.net/creating-a-rolling-file-logging-provider-for-asp-net-core-2-0/
 
 ## Tips & Tricks
 - Performance Tuning for .NET Core: https://reubenbond.github.io/posts/dotnet-perf-tuning
