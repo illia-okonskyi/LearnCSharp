@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace ConfiguringApps
 {
@@ -23,6 +24,11 @@ namespace ConfiguringApps
                     {
                         config.AddCommandLine(args);
                     }
+                })
+                .ConfigureLogging((hostingContext, logging) => {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
                 })
                 .UseIISIntegration()
                 .UseStartup<Startup>();
