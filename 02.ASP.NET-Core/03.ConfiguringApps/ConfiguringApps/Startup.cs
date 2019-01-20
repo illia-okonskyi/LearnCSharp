@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using ConfiguringApps.Infrastructure;
 using ConfiguringApps.Infrastructure.Middleware;
 
@@ -8,6 +9,13 @@ namespace ConfiguringApps
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<UptimeService>();
@@ -16,14 +24,18 @@ namespace ConfiguringApps
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if ((Configuration.GetSection("ExampleMiddleware")?.GetValue<bool>("Enabled")).Value)
             {
-                app.UseDeveloperExceptionPage();
-                app.UseStatusCodePages();
                 app.UseMiddleware<ResponseEditingMiddleware>();
                 app.UseMiddleware<RequestEditingMiddleware>();
                 app.UseMiddleware<ShortCircuitMiddleware>();
                 app.UseMiddleware<ContentMiddleware>();
+            }
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
             } else
             {
                 app.UseExceptionHandler("/Home/Error");
