@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ConfiguringApps.Infrastructure;
 
@@ -13,10 +14,26 @@ namespace ConfiguringApps.Controllers
             _uptime = uptime;
         }
 
-        public ViewResult Index() => View(new Dictionary<string, string>
+        public ViewResult Index(bool throwException = false)
         {
-            ["Message"] = "This is the Index action",
-            ["Uptime"] = $"{_uptime.Uptime} ms"
-        });
+            if (throwException)
+            {
+                throw new NullReferenceException();
+            }
+
+            return View(new Dictionary<string, string>
+            {
+                ["Message"] = "This is the Index action",
+                ["Uptime"] = $"{_uptime.Uptime} ms"
+            });
+        }
+
+        public ViewResult Error()
+        {
+            return View(nameof(Index), new Dictionary<string, string>
+            {
+                ["Message"] = "This is the Error action"
+            });
+        }
     }
 }

@@ -18,10 +18,15 @@ namespace ConfiguringApps
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
                 app.UseMiddleware<ResponseEditingMiddleware>();
                 app.UseMiddleware<RequestEditingMiddleware>();
                 app.UseMiddleware<ShortCircuitMiddleware>();
                 app.UseMiddleware<ContentMiddleware>();
+            } else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseMvc(routes => {
