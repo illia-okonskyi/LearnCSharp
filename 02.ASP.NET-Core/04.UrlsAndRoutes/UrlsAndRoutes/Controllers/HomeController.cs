@@ -20,6 +20,7 @@ namespace UrlsAndRoutes.Controllers
                 Action = nameof(CustomVariable),
             };
             r.Data["id"] = id ?? "<no value>";
+            r.Data["catchall"] = RouteData.Values["catchall"];
             return View("Result", r);
         }
     }
