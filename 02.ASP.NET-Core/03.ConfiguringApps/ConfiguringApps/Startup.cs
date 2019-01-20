@@ -19,7 +19,9 @@ namespace ConfiguringApps
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<UptimeService>();
-            services.AddMvc();
+            services.AddMvc().AddMvcOptions(options => {
+                options.RespectBrowserAcceptHeader = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
