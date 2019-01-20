@@ -19,7 +19,7 @@ namespace UrlsAndRoutes.Controllers
                 Controller = nameof(HomeController),
                 Action = nameof(CustomVariable),
             };
-            r.Data["id"] = id;
+            r.Data["id"] = id ?? "<no value>";
             return View("Result", r);
         }
     }
