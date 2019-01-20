@@ -31,6 +31,9 @@ namespace ConfiguringApps
                     logging.AddDebug();
                 })
                 .UseIISIntegration()
+                .UseDefaultServiceProvider((hostingContext, options) => {
+                    options.ValidateScopes = hostingContext.HostingEnvironment.IsDevelopment();
+                })
                 .UseStartup<Startup>();
         }
     }
