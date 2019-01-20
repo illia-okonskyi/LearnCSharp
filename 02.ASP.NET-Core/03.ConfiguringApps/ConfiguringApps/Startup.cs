@@ -29,6 +29,7 @@ namespace ConfiguringApps
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseStaticFiles();
             app.UseMvc(routes => {
                 routes.MapRoute(
                 name: "default",
