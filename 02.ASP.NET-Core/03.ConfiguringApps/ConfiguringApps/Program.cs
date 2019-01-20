@@ -18,7 +18,9 @@ namespace ConfiguringApps
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostingContext, config) => {
+                    var env = hostingContext.HostingEnvironment;
                     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                     if (args != null)
                     {
@@ -34,7 +36,7 @@ namespace ConfiguringApps
                 .UseDefaultServiceProvider((hostingContext, options) => {
                     options.ValidateScopes = hostingContext.HostingEnvironment.IsDevelopment();
                 })
-                .UseStartup<Startup>();
+                .UseStartup(nameof(ConfiguringApps));
         }
     }
 }
