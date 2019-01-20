@@ -16,10 +16,12 @@ namespace UrlsAndRoutes
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}");
+                    template: "{controller}/{action}",
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }
