@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Routing;
 
 namespace UrlsAndRoutes
 {
@@ -21,7 +22,13 @@ namespace UrlsAndRoutes
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id:alpha:minlength(6)?}");
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" },
+                    constraints: new {
+                        id = new CompositeRouteConstraint(new IRouteConstraint[] {
+                            new AlphaRouteConstraint(),
+                            new MinLengthRouteConstraint(6)
+                        })});
             });
         }
     }
