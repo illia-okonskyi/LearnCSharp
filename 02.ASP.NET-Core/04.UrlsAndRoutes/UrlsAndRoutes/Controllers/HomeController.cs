@@ -12,6 +12,14 @@ namespace UrlsAndRoutes.Controllers
             Action = nameof(Index)
         });
 
+        // NOTE: Route attribute overrides the default routing scheme and provides
+        //       full URL to the action. This action no longer accessible through
+        //       /Home/CustomVariable URL but it can be accessed via next URLs:
+        //       - /app/Home/actions/CustomVariable
+        //       - /app/Home/actions/CustomVariable/mon
+        //      [controller] placeholder is replaced with the name of the target Controller: Home
+        //      [action] placeholder is replaced with the name of the target Action: CustomVariable
+        [Route("app/[controller]/actions/[action]/{id:weekday?}")]
         public ViewResult CustomVariable(string id)
         {
             Result r = new Result
