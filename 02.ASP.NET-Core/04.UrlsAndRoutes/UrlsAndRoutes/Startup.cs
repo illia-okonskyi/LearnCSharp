@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.Routing;
+using UrlsAndRoutes.Infrastructure;
 
 namespace UrlsAndRoutes
 {
@@ -24,11 +25,7 @@ namespace UrlsAndRoutes
                     name: "default",
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" },
-                    constraints: new {
-                        id = new CompositeRouteConstraint(new IRouteConstraint[] {
-                            new AlphaRouteConstraint(),
-                            new MinLengthRouteConstraint(6)
-                        })});
+                    constraints: new { id = new WeekDayConstraint() });
             });
         }
     }
