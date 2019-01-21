@@ -21,9 +21,7 @@ namespace UrlsAndRoutes
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" },
-                    constraints: new { id = new IntRouteConstraint() });
+                    template: "{controller=Home}/{action=Index}/{id:alpha:minlength(6)?}");
             });
         }
     }
