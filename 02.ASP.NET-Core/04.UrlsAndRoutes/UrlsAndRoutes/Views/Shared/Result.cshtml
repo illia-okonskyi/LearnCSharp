@@ -16,5 +16,31 @@
             <tr><th>@key:</th><td>@Model.Data[key]</td></tr>
         }
     </table>
+
+    <p>
+        <a asp-controller="Home"
+           asp-action="CustomVariable"
+           asp-route-id="mon"
+           asp-route-routeVar="routeVar">Generating relative outgoing URLs example</a>
+    </p>
+    <p>
+        <a asp-controller="Home"
+           asp-action="CustomVariable"
+           asp-route-id="tue"
+           asp-route-routeVar="routeVar"
+           asp-protocol="http"
+           asp-host="localhost:55386"
+           asp-fragment="myFragment">Generating full outgoing URLs example</a>
+    </p>
+    <p>
+        <a asp-action="CustomVariable"
+           asp-route-id="wed"
+           asp-route-routeVar="routeVar">
+            Routing system can reuse incoming URL when generating an outgiong URL (in the example<br />
+            asp-controller is omitted and the controller of the outgoing URL will be same as in<br />
+            incoming URL)
+        </a>
+    </p>
+    <p>Generating URL as string: @Url.Action("CustomVariable", "Home", new { id = "thu", routeVar = "routeVar" })</p>
 </body>
 </html>

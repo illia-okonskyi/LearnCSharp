@@ -20,7 +20,7 @@ namespace UrlsAndRoutes.Controllers
         //      [controller] placeholder is replaced with the name of the target Controller: Home
         //      [action] placeholder is replaced with the name of the target Action: CustomVariable
         [Route("app/[controller]/actions/[action]/{id:weekday?}")]
-        public ViewResult CustomVariable(string id)
+        public ViewResult CustomVariable(string id, string routeVar)
         {
             Result r = new Result
             {
@@ -28,6 +28,8 @@ namespace UrlsAndRoutes.Controllers
                 Action = nameof(CustomVariable),
             };
             r.Data["id"] = id ?? "<no value>";
+            r.Data["routeVar"] = routeVar ?? "<no value>";
+            r.Data["GeneratingUrlInCode"] = Url.Action("CustomVariable", "Home", new { id = "fri" });
             return View("Result", r);
         }
     }
