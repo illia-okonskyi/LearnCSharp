@@ -42,5 +42,19 @@
         </a>
     </p>
     <p>Generating URL as string: @Url.Action("CustomVariable", "Home", new { id = "thu", routeVar = "routeVar" })</p>
+
+    <p>
+        <a asp-route-legacyUrl="/articles/Windows_3.1_Overview.html">
+            Outgoing URL which is handled by CustomRouter
+        </a>
+    </p>
+    <p>
+        Outgoing URL which is handled by CustomRouter (string):
+        @Url.Action(null, null, new { legacyUrl = "/old/.NET_1.0_Class_Library" })
+    </p>
+    <p>
+        Outgoing URL which is NOT handled by CustomRouter (string):
+        @Url.Action(null, null, new { legacyUrl = "/notHandled/old/.NET_1.0_Class_Library" })
+    </p>
 </body>
 </html>

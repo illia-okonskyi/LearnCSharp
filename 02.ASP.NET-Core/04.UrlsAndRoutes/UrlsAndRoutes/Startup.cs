@@ -24,7 +24,16 @@ namespace UrlsAndRoutes
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.Routes.Add(new CustomRouter(app.ApplicationServices,
+                    "/articles/Windows_3.1_Overview.html",
+                    "/old/.NET_1.0_Class_Library"));
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
