@@ -56,5 +56,13 @@
         Outgoing URL which is NOT handled by CustomRouter (string):
         @Url.Action(null, null, new { legacyUrl = "/notHandled/old/.NET_1.0_Class_Library" })
     </p>
+    <p>
+        <a asp-action="Index" asp-controller="Home" asp-route-area="Admin">Outgoing URL to the another area</a>
+    </p>
+    <p>
+        Outgoing URL to the another area (string):
+        @Url.Action("AttributeRoute", "Home", new { area = "Admin" })
+    </p>
+
 </body>
 </html>
