@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -10,6 +11,9 @@ namespace ControllersAndActions.Controllers
     //       identify them as simple pulbic methods, not actions
     public class PocoController
     {
+        [ControllerContext]
+        public ControllerContext ControllerContext { get; set; }
+
         public string Index() => "This is a POCO controller";
 
         public ViewResult Index2() => new ViewResult()
@@ -20,6 +24,18 @@ namespace ControllersAndActions.Controllers
                 new ModelStateDictionary())
             {
                 Model = $"This is a POCO controller"
+            }
+        };
+
+        public ViewResult Headers() => new ViewResult()
+        {
+            ViewName = "DictionaryResult",
+            ViewData = new ViewDataDictionary(
+                new EmptyModelMetadataProvider(),
+                new ModelStateDictionary())
+            {
+                Model = ControllerContext.HttpContext.Request.Headers
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.First())
             }
         };
     }
