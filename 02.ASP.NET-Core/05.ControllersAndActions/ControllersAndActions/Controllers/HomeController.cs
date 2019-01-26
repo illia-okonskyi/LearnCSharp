@@ -90,5 +90,13 @@ namespace ControllersAndActions.Controllers
         //         status code to the client.
         public StatusCodeResult StatusCodeResultExample()
             => StatusCode(StatusCodes.Status404NotFound);
+
+        // NOTE: Additional view result class not covered in this example project
+        // - PartialViewResult Controller.PartialView() - is used to select a partial view.
+        // - ViewComponentResult Controller.ViewComponent() - is used to select a view component.
+        // - EmptyResult (no MVC Controller method) - does nothing and produces an empty response
+        //   to the client.
+        // - ChallengeResult (no MVC Controller method) - is used to enforce security policies in
+        //   requests
     }
 }
