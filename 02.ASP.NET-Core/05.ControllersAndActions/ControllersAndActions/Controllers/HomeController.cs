@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ControllersAndActions.Controllers
 {
@@ -8,5 +9,12 @@ namespace ControllersAndActions.Controllers
 
         public ViewResult ReceiveForm(string name, string city) =>
             View("Result", $"{name} lives in {city}");
+
+        public ViewResult ViewBagUsing()
+        {
+            ViewBag.Message = "Hello";
+            ViewBag.Date = DateTime.Now;
+            return View("Result");
+        }
     }
 }
