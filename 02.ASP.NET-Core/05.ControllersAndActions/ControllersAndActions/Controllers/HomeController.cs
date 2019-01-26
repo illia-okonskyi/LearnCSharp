@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControllersAndActions.Controllers
@@ -66,5 +67,28 @@ namespace ControllersAndActions.Controllers
         //          the contents to the client.
         public VirtualFileResult FileResultExample()
             => File("/lib/twitter-bootstrap/css/bootstrap.css", "text/css");
+
+        // NOTE: Set of methods to deal with status codes:
+        //       - StatusCodeResult Controller.StatusCode() - sends a specified HTTP status 
+        //         code to the client.
+        //       - OkResult Controller.Ok() - sends an HTTP 200 status code to the client.
+        //       - CreatedResult Controller.Created() - This action result sends an HTTP 201 status
+        //         code to the client.
+        //       - CreatedAtActionResult Controller.CreatedAtAction() - sends an HTTP 201 status
+        //         code to the client along with a URL in the Location header that targets an action
+        //         and controller.
+        //       - CreatedAtRouteResult Controller.CreatedAtRoute() - sends an HTTP 201 status code
+        //         to the client along with a URL in the Location header that is generated from a
+        //         specific route.
+        //       - BadRequestResult Controller.BadRequest() - sends an HTTP 400 status code to the
+        //         client.
+        //       - UnauthorizedResult Controller.Unauthorized() - sends an HTTP 401 status code
+        //         to the client.
+        //       - NotFoundResult Controller.NotFound() - sends an HTTP 404 status code to the
+        //         client
+        //       - UnsupportedMediaTypeResult (no MVC Controller method) - sends an HTTP 415 
+        //         status code to the client.
+        public StatusCodeResult StatusCodeResultExample()
+            => StatusCode(StatusCodes.Status404NotFound);
     }
 }
