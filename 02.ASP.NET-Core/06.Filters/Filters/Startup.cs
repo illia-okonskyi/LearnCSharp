@@ -11,7 +11,12 @@ namespace Filters
         {
             services.AddSingleton<IFilterDiagnostics, DefaultFilterDiagnostics>();
             services.AddSingleton<TimeFilter>();
-            services.AddMvc();
+            services.AddScoped<ViewResultDiagnosticsFilter>();
+            services.AddScoped<DiagnosticsFilter>();
+            services.AddMvc().AddMvcOptions(options => {
+                options.Filters.AddService(typeof(ViewResultDiagnosticsFilter));
+                options.Filters.AddService(typeof(DiagnosticsFilter));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
