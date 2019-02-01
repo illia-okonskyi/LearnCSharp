@@ -26,5 +26,9 @@ namespace Filters.Controllers
 
         [ViewResultDetailsAsync]
         public ViewResult ViewResultDetailsAsync() => View("Message", "ViewResultDetailsAsync action");
+
+        [HybridProfile]
+        [ViewResultDetailsAsync]
+        public ViewResult HybridProfiled() => View("Message", "HybridProfiled action");
     }
 }
