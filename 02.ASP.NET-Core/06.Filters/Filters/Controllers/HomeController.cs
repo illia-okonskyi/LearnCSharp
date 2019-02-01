@@ -14,5 +14,11 @@ namespace Filters.Controllers
 
         public ViewResult SecondAction() =>
             View("Message", "This is the SecondAction action on the Home controller");
+
+        [Profile]
+        public ViewResult Profiled() => View("Message", "Profiled action");
+
+        [ProfileAsync]
+        public ViewResult ProfiledAsync() => View("Message", "ProfiledAsync action");
     }
 }
