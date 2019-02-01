@@ -47,5 +47,10 @@ namespace Filters.Controllers
 
             return View("Message", $"The value is {id}");
         }
+
+        [TypeFilter(typeof(DiagnosticsFilter))]
+        [ServiceFilter(typeof(TimeFilter))]
+        public ViewResult DependencyInjectionInFilters()
+            => View("Message", "DependencyInjectionInFilters action");
     }
 }

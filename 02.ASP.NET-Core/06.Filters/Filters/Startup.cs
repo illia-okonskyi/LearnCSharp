@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Filters.Infrastructure;
 
 namespace Filters
 {
@@ -8,6 +9,8 @@ namespace Filters
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IFilterDiagnostics, DefaultFilterDiagnostics>();
+            services.AddSingleton<TimeFilter>();
             services.AddMvc();
         }
 
