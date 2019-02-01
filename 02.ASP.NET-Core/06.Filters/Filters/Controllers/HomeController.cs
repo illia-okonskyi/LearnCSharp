@@ -20,5 +20,11 @@ namespace Filters.Controllers
 
         [ProfileAsync]
         public ViewResult ProfiledAsync() => View("Message", "ProfiledAsync action");
+
+        [ViewResultDetails]
+        public ViewResult ViewResultDetails() => View("Message", "ViewResultDetails action");
+
+        [ViewResultDetailsAsync]
+        public ViewResult ViewResultDetailsAsync() => View("Message", "ViewResultDetailsAsync action");
     }
 }
