@@ -6,6 +6,12 @@ namespace Filters.Controllers
 {
     // NOTE: Filters are applied as attributes to whole controller or to concrete action
     //       To apply filter to all actions of all controllers use global filter
+    // NOTE: Filters execute order can be changed via IOrderedFilter.Order property (custom filters 
+    //       should implement this interface too for enabling the ordering feature). Example:
+    //       [Message("Default MVC Message filter with custom order", Order = 10)]
+    //       The [TypeFilter] and [ServiceFilter] attributes also implement the IOrderedFilter
+    //       interface, which means you can change the filter order when using dependency injection
+    //       as well.
 
     [HttpsOnly]
     public class HomeController : Controller
