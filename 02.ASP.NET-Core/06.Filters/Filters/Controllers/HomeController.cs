@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Filters.Infrastructure;
 
 namespace Filters.Controllers
@@ -30,5 +31,21 @@ namespace Filters.Controllers
         [HybridProfile]
         [ViewResultDetailsAsync]
         public ViewResult HybridProfiled() => View("Message", "HybridProfiled action");
+
+        [RangeException]
+        public ViewResult GenerateException(int? id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            if (id > 10)
+            {
+                throw new ArgumentOutOfRangeException(nameof(id));
+            }
+
+            return View("Message", $"The value is {id}");
+        }
     }
 }
