@@ -30,3 +30,6 @@
 
 ## Manuals and guidelines
 - C# frameworks manuals and guidelines on Russian: https://metanit.com/sharp/
+
+## Tools
+- Fiddler: standalone HTTP debuging tool www.telerik.com/fiddler
