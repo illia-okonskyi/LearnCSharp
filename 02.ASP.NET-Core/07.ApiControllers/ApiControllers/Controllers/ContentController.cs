@@ -48,5 +48,20 @@ namespace ApiControllers.Controllers
             ClientName = "Joe",
             Location = "Board Room"
         };
+
+        [HttpPost]
+        [Consumes("application/json")]
+        public Reservation ReceiveJson([FromBody] Reservation reservation)
+        {
+            reservation.ClientName = "Json";
+            return reservation;
+        }
+        [HttpPost]
+        [Consumes("application/xml")]
+        public Reservation ReceiveXml([FromBody] Reservation reservation)
+        {
+            reservation.ClientName = "Xml";
+            return reservation;
+        }
     }
 }
