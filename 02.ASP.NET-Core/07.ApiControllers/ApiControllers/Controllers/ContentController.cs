@@ -30,5 +30,23 @@ namespace ApiControllers.Controllers
             Location = "Board Room"
         };
 
+        // NOTE: FormatFilter attribute installs filter which does next:
+        //       - looks for a routing segment variable called format
+        //       - gets the shorthand value that it contains,
+        //       - and retrieves the associated data format from the application configuration.
+        //         This format is then used for the response.
+        //       If there is no routing data available, then the query string is inspected as well.
+        // NOTE: You don’t have to use the Produces attribute in conjunction with the FormatFilter
+        //       attribute, but if you do, only requests that specify formats for which the
+        //       Produces attribute has been configured will work
+        [HttpGet("object/{format?}")]
+        [FormatFilter]
+        [Produces("application/json", "application/xml")]
+        public Reservation GetObject() => new Reservation
+        {
+            Id = 100,
+            ClientName = "Joe",
+            Location = "Board Room"
+        };
     }
 }
