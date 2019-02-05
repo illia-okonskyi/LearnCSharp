@@ -12,12 +12,23 @@ namespace ApiControllers.Controllers
         public string GetString() => "This is a string response";
 
         // NOTE: Default behavior for all return types except string is to format it to JSON
-        [HttpGet("object")]
-        public Reservation GetObject() => new Reservation
+        [HttpGet("objectAsJson")]
+        [Produces("application/json")]
+        public Reservation GetObjectAsJson() => new Reservation
         {
             Id = 100,
             ClientName = "Joe",
             Location = "Board Room"
         };
+
+        [HttpGet("objectAsXml")]
+        [Produces("application/xml")]
+        public Reservation GetObjectAsXml() => new Reservation
+        {
+            Id = 100,
+            ClientName = "Joe",
+            Location = "Board Room"
+        };
+
     }
 }
