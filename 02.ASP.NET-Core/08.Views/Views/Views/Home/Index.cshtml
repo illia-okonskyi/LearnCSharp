@@ -1,17 +1,25 @@
 ﻿@model string[]
-@{ Layout = null; }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Razor</title>
-    <link asp-href-include="/lib/twitter-bootstrap/css/*.min.css" rel="stylesheet" />
-</head>
-<body class="m-1 p-1">
+@{ Layout = "_Layout"; }
+
+@section Header {
+    <div class="bg-success">
+        @foreach (string str in new[] { "Home", "List", "Edit" })
+        {
+            <a class="btn btn-sm btn-primary" asp-action="str">@str</a>
+        }
+    </div>
+}
+
+@section Body {
     This is a list of fruit names:
     @foreach (string name in Model)
     {
         <span><b>@name</b></span>
     }
-</body>
-</html>
+}
+
+@section Footer {
+    <div class="bg-success">
+        This is the footer
+    </div>
+}
