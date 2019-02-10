@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
+using Views.Infrastructure;
 
 namespace Views
 {
@@ -10,6 +12,11 @@ namespace Views
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<MvcViewOptions>(options => {
+                // NOTE: You can call options.ViewEngines.Clear() before adding custom view engine
+                //       to ensure that no other view engines are registered
+                options.ViewEngines.Insert(0, new CustomViewEngine());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
