@@ -15,5 +15,11 @@ namespace Views.Controllers
             ViewBag.Time = DateTime.Now.ToString("HH:mm:ss");
             return View("CustomView");
         }
+
+        public ViewResult CustomViewLocationExpander()
+        {
+            return View("CustomViewLocationExpander");
+        }
+
     }
 }

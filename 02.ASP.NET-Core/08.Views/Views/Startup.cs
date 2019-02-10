@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Views.Infrastructure;
 
 namespace Views
@@ -16,6 +17,9 @@ namespace Views
                 // NOTE: You can call options.ViewEngines.Clear() before adding custom view engine
                 //       to ensure that no other view engines are registered
                 options.ViewEngines.Insert(0, new CustomViewEngine());
+            });
+            services.Configure<RazorViewEngineOptions>(options => {
+                options.ViewLocationExpanders.Add(new CustomViewLocationExpander());
             });
         }
 
