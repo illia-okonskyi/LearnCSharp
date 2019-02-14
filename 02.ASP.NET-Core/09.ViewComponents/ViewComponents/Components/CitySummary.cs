@@ -52,8 +52,13 @@ namespace ViewComponents.Components
         //       - /Views/Shared/Components/{component}/{viewName} | Default.cshtml
         //       Sharing partial views to view compoments can be made by specifying full path
         //       of the target view like Views/Components/CommonViews/ViewName.cshtml
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(bool showList)
         {
+            if (showList)
+            {
+                return View("CityList", _repository.Cities);
+            }
+
             var target = RouteData.Values["id"] as string;
             var cities = _repository.Cities.Where(
                 city => target == null || string.Compare(city.Country, target, true) == 0);
