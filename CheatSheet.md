@@ -21,6 +21,7 @@
 	- https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.2
 	- https://www.stevejgordon.co.uk/asp-net-core-dependency-injection-registering-multiple-implementations-interface
 	- Action Injection (inject services directly to actions as arguments): supply argument with [FromServices] attribute
+	- DI in views: use the `@inject` keyword
 
 - Example write logs to file: https://andrewlock.net/creating-a-rolling-file-logging-provider-for-asp-net-core-2-0/
 
