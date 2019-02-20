@@ -25,6 +25,8 @@
 
 - Example write logs to file: https://andrewlock.net/creating-a-rolling-file-logging-provider-for-asp-net-core-2-0/
 
+- Tag helpers (overview, built-in tag helpers are described in the other articles of the group): https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro?view=aspnetcore-2.2
+
 ## Tips & Tricks
 - Performance Tuning for .NET Core: https://reubenbond.github.io/posts/dotnet-perf-tuning
 - All About Span: Exploring a New .NET Mainstay: https://msdn.microsoft.com/en-us/magazine/mt814808.aspx
