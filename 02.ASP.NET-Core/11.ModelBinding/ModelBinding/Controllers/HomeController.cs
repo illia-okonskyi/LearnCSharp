@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ModelBinding.Models;
 
@@ -57,5 +58,8 @@ namespace ModelBinding.Controllers
         //{
         //    return View(summary);
         //}
+
+        public ViewResult Addresses(IList<AddressSummary> addresses) =>
+            View(addresses ?? new List<AddressSummary>());
     }
 }
