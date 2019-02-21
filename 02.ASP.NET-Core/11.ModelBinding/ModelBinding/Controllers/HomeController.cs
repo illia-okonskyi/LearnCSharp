@@ -61,5 +61,20 @@ namespace ModelBinding.Controllers
 
         public ViewResult Addresses(IList<AddressSummary> addresses) =>
             View(addresses ?? new List<AddressSummary>());
+
+        // NOTE: Specifying model binding source can be done via next attributes:
+        //       - FromForm - select form data as the source of binding data.
+        //       - FromRoute - select the routing system as the source of binding data.
+        //       - FromQuery - select the query string as the source of binding data.
+        //       - FromHeader - select a request header as the source of binding data.
+        //       - FromBody - specifies that the request body should be used as the source of
+        //                    binding data, which is required when you want to receive data from
+        //                    requests that are not form-encoded, such as in API controllers.
+        public ViewResult HeaderSource(HeadersModel model) => View(model);
+
+        public ViewResult BodySource() => View();
+
+        [HttpPost]
+        public Person BodySource([FromBody]Person model) => model;
     }
 }
