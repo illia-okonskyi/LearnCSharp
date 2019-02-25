@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Validation.Infrastructure;
 
 namespace Validation.Models
 {
@@ -28,7 +29,7 @@ namespace Validation.Models
         [Required(ErrorMessage = "Please enter a date")]
         public DateTime Date { get; set; }
 
-        [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms")]
+        [MustBeTrue(ErrorMessage = "You must accept the terms")]
         public bool TermsAccepted { get; set; }
     }
 }
