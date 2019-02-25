@@ -3,6 +3,9 @@
 
 @section scripts {
     <script asp-src-include="/lib/jquery/jquery.min.js"></script>
+    @*NOTE: professional using of the client-side validation is out of scope of this tutorial*@
+    <script asp-src-include="/lib/jquery-validate/jquery.validate.min.js"></script>
+    <script asp-src-include="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("input.input-validation-error").addClass("is-invalid");
