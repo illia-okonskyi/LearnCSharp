@@ -13,21 +13,11 @@ namespace Validation.Controllers
         [HttpPost]
         public ViewResult MakeBooking(Appointment appt)
         {
-            if (string.IsNullOrEmpty(appt.ClientName))
-            {
-                // Property-level error message
-                ModelState.AddModelError(nameof(appt.ClientName), "Please enter your name");
-            }
-            if (ModelState.GetValidationState("Date") == ModelValidationState.Valid &&
+            if (ModelState.GetValidationState(nameof(appt.Date)) == ModelValidationState.Valid &&
                 DateTime.Now > appt.Date)
             {
                 // Property-level error message
                 ModelState.AddModelError(nameof(appt.Date), "Please enter a date in the future");
-            }
-            if (!appt.TermsAccepted)
-            {
-                // Property-level error message
-                ModelState.AddModelError(nameof(appt.TermsAccepted), "You must accept the terms");
             }
             if (ModelState.GetValidationState(nameof(appt.Date)) == ModelValidationState.Valid &&
                 ModelState.GetValidationState(nameof(appt.ClientName)) == ModelValidationState.Valid &&
