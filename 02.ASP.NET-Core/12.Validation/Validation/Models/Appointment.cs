@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Validation.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Validation.Models
 {
@@ -27,6 +28,12 @@ namespace Validation.Models
 
         [UIHint("Date")]
         [Required(ErrorMessage = "Please enter a date")]
+        // NOTE: Remove validation is the validation via AJAX request. Is made automatically by the
+        //       jQuery-validate plugin
+        // NOTE: Documentation of the RemoteAttribute says that HttpMethod  can be only "Get" or
+        //       "Post" (case sensetive) but it seems that comparision are made via case insensetive
+        //       method, so "GET" or "POST" values are also accepatble.
+        [Remote("ValidateDate", "Home", HttpMethod = "Post")]
         public DateTime Date { get; set; }
 
         [MustBeTrue(ErrorMessage = "You must accept the terms")]

@@ -35,5 +35,22 @@ namespace Validation.Controllers
 
             return View("Completed", appt);
         }
+
+        [HttpPost]
+        public JsonResult ValidateDate(string Date)
+        {
+            if (!DateTime.TryParse(Date, out DateTime parsedDate))
+            {
+                return Json("Please enter a valid date (mm/dd/yyyy)");
+            }
+            else if (DateTime.Now > parsedDate)
+            {
+                return Json("Please enter a date in the future");
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
     }
 }
