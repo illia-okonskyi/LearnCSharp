@@ -20,9 +20,18 @@ namespace Identity
         {
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(_configuration["Data:Identity:ConnectionString"]));
-            services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>()
-                .AddDefaultTokenProviders();
+
+            var identityBuilder = services.AddIdentity<AppUser, IdentityRole>(options => {
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+            });
+            identityBuilder.AddEntityFrameworkStores<AppIdentityDbContext>();
+            identityBuilder.AddDefaultTokenProviders();
 
             services.AddMvc();
         }
