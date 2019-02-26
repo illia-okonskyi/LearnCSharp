@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Identity.Infrastructure;
 using Identity.Models;
 
 namespace Identity
@@ -18,6 +19,9 @@ namespace Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+            services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
+
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(_configuration["Data:Identity:ConnectionString"]));
 
