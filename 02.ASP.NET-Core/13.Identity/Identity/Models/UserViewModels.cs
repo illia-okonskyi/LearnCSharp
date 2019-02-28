@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Models
 {
@@ -23,5 +25,21 @@ namespace Identity.Models
 
         [UIHint("HiddenInput")]
         public string ReturnUrl { get; set; }
+    }
+
+    public class RoleEditModelGet
+    {
+        public IdentityRole Role { get; set; }
+        public IEnumerable<AppUser> Members { get; set; }
+        public IEnumerable<AppUser> NonMembers { get; set; }
+    }
+
+    public class RoleEditModelPost
+    {
+        [Required]
+        public string RoleName { get; set; }
+        public string RoleId { get; set; }
+        public string[] IdsToAdd { get; set; }
+        public string[] IdsToDelete { get; set; }
     }
 }
