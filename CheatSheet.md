@@ -22,6 +22,11 @@
 	- https://www.stevejgordon.co.uk/asp-net-core-dependency-injection-registering-multiple-implementations-interface
 	- Action Injection (inject services directly to actions as arguments): supply argument with [FromServices] attribute
 	- DI in views: use the `@inject` keyword
+	- To prevent memory leaks ASP.NET Core performs checks when scoped services are requested from the global scope  
+	  (it's like singletone object obtains service lifetime of which must enclosed within the HTTP request scope and this  
+	  causes scoped service will be never disposed). So, for such situations the explicit scope of the services is needed:  
+	  `using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()) {...}`
+
 
 - Example write logs to file: https://andrewlock.net/creating-a-rolling-file-logging-provider-for-asp-net-core-2-0/
 
