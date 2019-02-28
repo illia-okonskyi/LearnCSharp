@@ -18,6 +18,12 @@ namespace Identity.Controllers
         }
 
         [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginModel() { ReturnUrl = returnUrl });

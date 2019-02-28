@@ -41,7 +41,10 @@ namespace Identity
             //       redirect result is generated. Default redirection link is
             //       /Account/Login?ReturnUrl=<URL> and it can be changed via 
             //       IServiceCollection.ConfigureApplicationCookie extenstion method
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Users/Login");
+            services.ConfigureApplicationCookie(options => {
+                options.LoginPath = "/Users/Login";
+                options.AccessDeniedPath = "/Users/AccessDenied";
+            });
 
             services.AddMvc();
         }
