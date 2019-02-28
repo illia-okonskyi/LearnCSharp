@@ -56,6 +56,19 @@ namespace Identity
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+
+            // NOTE: To prevent memory leaks ASP.NET Core performs checks when scoped services are
+            //       requested from the global scope (it's like singletone object obtains service
+            //       lifetime of which must enclosed within the HTTP request scope and this
+            //       causes scoped service will be never disposed). So, for such situations the
+            //       explicit scope of the services is needed
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                AppIdentityDbContext.EnsureAdminAccountPresent(userManager, roleManager, _configuration)
+                    .Wait();
+            }
         }
     }
 }
