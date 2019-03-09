@@ -46,6 +46,11 @@ namespace Identity
                 });
             });
 
+            //services.AddAuthentication().AddGoogle(opts => {
+            //    opts.ClientId = "<enter client id here>";
+            //    opts.ClientSecret = "<enter client secret here>";
+            //});
+
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(_configuration["Data:Identity:ConnectionString"]));
 
