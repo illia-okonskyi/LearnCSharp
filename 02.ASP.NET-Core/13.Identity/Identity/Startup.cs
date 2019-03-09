@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,18 @@ namespace Identity
             services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             services.AddSingleton<IClaimsTransformation, ClaimsProvider>();
+            services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("DCUsers", policy => {
+                    policy.RequireRole("Users");
+                    policy.RequireClaim(ClaimTypes.StateOrProvince, "DC");
+                });
+                options.AddPolicy("NotBob", policy => {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements(new CustomAuthorizationRequirement("Bob"));
+                });
+            });
 
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(_configuration["Data:Identity:ConnectionString"]));

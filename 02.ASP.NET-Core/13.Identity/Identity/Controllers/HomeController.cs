@@ -23,6 +23,12 @@ namespace Identity.Controllers
         [Authorize(Roles = "Users")]
         public ViewResult OtherAction() => View("Index", GetData(nameof(OtherAction)));
 
+        [Authorize(Policy = "DCUsers")]
+        public IActionResult OtherAction2() => View("Index", GetData(nameof(OtherAction2)));
+
+        [Authorize(Policy = "NotBob")]
+        public IActionResult OtherAction3() => View("Index", GetData(nameof(OtherAction3)));
+
         private Dictionary<string, object> GetData(string actionName) =>
             new Dictionary<string, object>
             {
