@@ -2,8 +2,24 @@
 
 namespace Identity.Models
 {
+    public enum City
+    {
+        None,
+        London,
+        Paris,
+        Chicago
+    }
+
+    public enum Qualification
+    {
+        None,
+        Basic,
+        Advanced
+    }
+
     public class AppUser : IdentityUser
     {
-        // no additional members are required for basic Identity installation
+        public City City { get; set; }
+        public Qualification Qualification { get; set; }
     }
 }

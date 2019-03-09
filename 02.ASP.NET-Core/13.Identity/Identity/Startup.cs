@@ -62,6 +62,10 @@ namespace Identity
             //       lifetime of which must enclosed within the HTTP request scope and this
             //       causes scoped service will be never disposed). So, for such situations the
             //       explicit scope of the services is needed
+            // NOTE: Entity Framework Core doesn’t have integrated support for working with seed
+            //       data, and care must be taken when creating migrations to disable seeding. The 
+            //       seeding statement can be enabled again once the database migration has been
+            //       created and applied.
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
