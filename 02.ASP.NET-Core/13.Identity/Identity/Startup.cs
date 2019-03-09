@@ -26,6 +26,7 @@ namespace Identity
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             services.AddSingleton<IClaimsTransformation, ClaimsProvider>();
             services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();
+            services.AddTransient<IAuthorizationHandler, DocumentAuthorizationHandler>();
 
             services.AddAuthorization(options => {
                 options.AddPolicy("DCUsers", policy => {
@@ -35,6 +36,13 @@ namespace Identity
                 options.AddPolicy("NotBob", policy => {
                     policy.RequireAuthenticatedUser();
                     policy.AddRequirements(new CustomAuthorizationRequirement("Bob"));
+                });
+                options.AddPolicy("AuthorsAndEditors", policy => {
+                    policy.AddRequirements(new DocumentAuthorizationRequirement
+                    {
+                        AllowAuthors = true,
+                        AllowEditors = true
+                    });
                 });
             });
 
