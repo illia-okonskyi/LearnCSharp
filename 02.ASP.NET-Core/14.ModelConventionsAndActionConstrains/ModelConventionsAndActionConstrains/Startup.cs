@@ -33,6 +33,17 @@ namespace ModelConventionsAndActionConstrains
     //                            object.
     // - NonActionAttribute - prevents a method from being used to create an ActionModel object.
 
+    // When MVC receives an HTTP request, it goes through a selection process to identify the action
+    // method that will be used to handle it.If there are multiple actions that could handle the
+    // request, then MVC needs some way to decide which one to use, and that’s where action
+    // constraints are used. The purpose of action constraints is to help MVC choose between two or
+    // more similar action methods when any of them could be used to handle a request. Action
+    // constraints are used to tell MVC whether an action method can be used to handle a request
+    // and must implement the Microsoft.AspNetCore.Mvc.ActionConstraints.IActionConstraint
+    // interface. Also the Microsoft.AspNetCore.Mvc.ActionConstraints.IActionConstraintFactory
+    // interface can be implemented if you want to create a constraint that has dependencies to
+    // resolve.
+
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
