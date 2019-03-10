@@ -48,6 +48,7 @@ namespace ModelConventionsAndActionConstrains
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<UserAgentComparer>();
             services.AddMvc();
             //services.AddMvc().AddMvcOptions(options => {
             //    options.Conventions.Add(new ActionNamePrefixAttribute("Do"));

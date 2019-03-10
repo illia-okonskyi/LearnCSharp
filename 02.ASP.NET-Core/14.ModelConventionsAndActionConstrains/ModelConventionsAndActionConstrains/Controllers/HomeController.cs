@@ -39,5 +39,19 @@ namespace ModelConventionsAndActionConstrains.Controllers
             Controller = nameof(HomeController),
             Action = nameof(ActionConstraintsExample2)
         });
+
+        public IActionResult ActionConstraintsWithDiExample() => View("Result", new Result
+        {
+            Controller = nameof(HomeController),
+            Action = nameof(ActionConstraintsWithDiExample)
+        });
+
+        [ActionName("ActionConstraintsWithDiExample")]
+        [UserAgentWithDi("Chrome")]
+        public IActionResult ActionConstraintsWithDiExample2() => View("Result", new Result
+        {
+            Controller = nameof(HomeController),
+            Action = nameof(ActionConstraintsWithDiExample2)
+        });
     }
 }
