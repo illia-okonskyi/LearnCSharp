@@ -25,5 +25,19 @@ namespace ModelConventionsAndActionConstrains.Controllers
             Controller = nameof(HomeController),
             Action = nameof(PrefixedAction)
         });
+
+        public IActionResult ActionConstraintsExample() => View("Result", new Result
+        {
+            Controller = nameof(HomeController),
+            Action = nameof(ActionConstraintsExample)
+        });
+
+        [ActionName("ActionConstraintsExample")]
+        [UserAgent("Chrome")]
+        public IActionResult ActionConstraintsExample2() => View("Result", new Result
+        {
+            Controller = nameof(HomeController),
+            Action = nameof(ActionConstraintsExample2)
+        });
     }
 }
