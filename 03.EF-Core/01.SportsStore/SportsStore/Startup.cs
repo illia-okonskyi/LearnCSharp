@@ -19,7 +19,13 @@ namespace SportsStore
             services.AddTransient<IRepository, DbRepository>();
 
             var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<AppDbContext>(options => {
+                // Use this to force logging the query arguments and other sensitive data
+                // during development
+                options.EnableSensitiveDataLogging();
+
+                options.UseSqlServer(connectionString);
+            });
 
             services.AddMvc();
         }
