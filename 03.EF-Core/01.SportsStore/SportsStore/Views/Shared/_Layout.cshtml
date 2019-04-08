@@ -4,6 +4,17 @@
     <meta name="viewport" content="width=device-width" />
     <title>SportsStore</title>
     <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <style>
+        .placeholder {
+            visibility: collapse;
+            display: none
+        }
+
+            .placeholder:only-child {
+                visibility: visible;
+                display: flex
+            }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -16,6 +27,10 @@
                 <a asp-controller="Categories" asp-action="Index"
                    class="@GetClassForButton("Categories")">
                     Categories
+                </a>
+                <a asp-controller="Orders" asp-action="Index"
+                   class="@GetClassForButton("Orders")">
+                    Orders
                 </a>
             </div>
             <div class="col">
