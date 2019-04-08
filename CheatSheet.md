@@ -41,3 +41,18 @@
 
 ## Tools
 - Fiddler: standalone HTTP debuging tool www.telerik.com/fiddler
+
+## CSS
+- The CSS `only-child` pseudo-class (https://css-tricks.com/almanac/selectors/o/only-child/) can be used to create placeholder row:  
+```
+<style>
+.placeholder { visibility: collapse; display: none }
+.placeholder:only-child { visibility: visible; display: flex }
+</style>
+<div class="<OUTER>">
+  <div class="row placeholder">
+    <div class="col text-center p-2">No Data</div>
+  </div>
+  @foreach (var entry in Model) { ... }
+</div>
+```
