@@ -11,22 +11,23 @@ namespace SportsStore.Controllers
 
         public IActionResult Index() => View(_repository.Products);
 
-        [HttpPost]
-        public IActionResult AddProduct(Product product)
-        {
-            _repository.AddProduct(product);
-            return RedirectToAction(nameof(Index));
-        }
-
         public IActionResult UpdateProduct(long id)
         {
-            return View(_repository.GetProduct(id));
+            return View(id == 0 ? new Product() : _repository.GetProduct(id));
         }
 
         [HttpPost]
         public IActionResult UpdateProduct(Product product)
         {
-            _repository.UpdateProduct(product);
+            if (product.Id == 0)
+            {
+                _repository.AddProduct(product);
+            }
+            else
+            {
+                _repository.UpdateProduct(product);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
