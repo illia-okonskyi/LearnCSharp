@@ -6,13 +6,19 @@ namespace SportsStore.Controllers
     public class HomeController : Controller
     {
         private readonly IRepository _repository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public HomeController(IRepository repository) => _repository = repository;
+        public HomeController(IRepository repository, ICategoryRepository categoryRepository)
+        {
+            _repository = repository;
+            _categoryRepository = categoryRepository;
+        }
 
         public IActionResult Index() => View(_repository.Products);
 
         public IActionResult UpdateProduct(long id)
         {
+            ViewBag.Categories = _categoryRepository.Categories;
             return View(id == 0 ? new Product() : _repository.GetProduct(id));
         }
 

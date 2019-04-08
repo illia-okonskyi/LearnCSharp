@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsStore.Models
 {
@@ -16,11 +17,11 @@ namespace SportsStore.Models
         //       it is still usefull to avoid multiple DB queries and operate on memory data, but
         //       more complex approach must be used, which can include query builder, pagination,
         //       etc.
-        public IEnumerable<Product> Products => _dbContext.Products.ToList();
+        public IEnumerable<Product> Products => _dbContext.Products.Include(p => p.Category).ToList();
 
         public Product GetProduct(long id)
         {
-            return _dbContext.Products.Find(id);
+            return _dbContext.Products.Include(p => p.Category).First(p => p.Id == id);
         }
 
         public void AddProduct(Product product)
