@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Models.Pages;
 
 namespace SportsStore.Controllers
 {
@@ -14,7 +15,10 @@ namespace SportsStore.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Index() => View(_repository.Products);
+        public IActionResult Index(QueryOptions options)
+        {
+            return View(_repository.GetProducts(options));
+        }
 
         public IActionResult UpdateProduct(long id)
         {

@@ -21,7 +21,7 @@ namespace SportsStore.Controllers
 
         public IActionResult EditOrder(long id)
         {
-            var products = _productRepository.Products;
+            var products = _productRepository.AllProducts;
             var order = id == 0 ? new Order() : _ordersRepository.GetOrder(id);
             var linesMap = order.Lines?.ToDictionary(l => l.ProductId) ??
                 new Dictionary<long, OrderLine>();
