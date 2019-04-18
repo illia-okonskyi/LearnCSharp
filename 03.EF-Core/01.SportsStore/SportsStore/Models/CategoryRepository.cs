@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SportsStore.Models.Pages;
 
 namespace SportsStore.Models
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> Categories { get; }
+        IEnumerable<Category> AllCategories { get; }
+        PagedList<Category> GetCategories(QueryOptions options);
         void AddCategory(Category category);
         void UpdateCategory(Category category);
         void DeleteCategory(Category category);
@@ -19,7 +21,12 @@ namespace SportsStore.Models
 
         public DbCategoryRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
-        public IEnumerable<Category> Categories => _dbContext.Categories;
+        public IEnumerable<Category> AllCategories => _dbContext.Categories;
+
+        public PagedList<Category> GetCategories(QueryOptions options)
+        {
+            return new PagedList<Category>(_dbContext.Categories, options);
+        }
 
         public void AddCategory(Category category)
         {

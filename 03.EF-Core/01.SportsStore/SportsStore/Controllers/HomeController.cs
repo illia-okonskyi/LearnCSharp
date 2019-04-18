@@ -22,7 +22,7 @@ namespace SportsStore.Controllers
 
         public IActionResult UpdateProduct(long id)
         {
-            ViewBag.Categories = _categoryRepository.Categories;
+            ViewBag.Categories = _categoryRepository.AllCategories;
             return View(id == 0 ? new Product() : _repository.GetProduct(id));
         }
 

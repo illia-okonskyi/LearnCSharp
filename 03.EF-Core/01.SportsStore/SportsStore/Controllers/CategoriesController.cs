@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Models.Pages;
 
 namespace SportsStore.Controllers
 {
@@ -11,7 +12,7 @@ namespace SportsStore.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Index() => View(_categoryRepository.Categories);
+        public IActionResult Index(QueryOptions options) => View(_categoryRepository.GetCategories(options));
 
         [HttpPost]
         public IActionResult AddCategory(Category category)
@@ -22,7 +23,7 @@ namespace SportsStore.Controllers
         public IActionResult EditCategory(long id)
         {
             ViewBag.EditId = id;
-            return View(nameof(Index), _categoryRepository.Categories);
+            return View(nameof(Index), _categoryRepository.AllCategories);
         }
 
         [HttpPost]
