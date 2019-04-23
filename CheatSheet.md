@@ -11,7 +11,9 @@
 ## Entity Framework Core
 - Command-line tool: `dotnet ef`
 	- Initial migration: `dotnet ef migrations add Initial`
-	 
+
+- SQL cache command-line tool: `dotnet sql-cache`
+	- Create cache: `dotnet sql-cache create "Server=(localdb)\MSSQLLocalDB;Database=SportsStore" "dbo" "SessionData"`
 
 ## ASP.NET Core MVC
 - Client-side validation: https://github.com/aspnet/jquery-validation-unobtrusive/
