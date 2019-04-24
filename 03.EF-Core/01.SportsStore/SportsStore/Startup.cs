@@ -19,6 +19,7 @@ namespace SportsStore
             services.AddTransient<IRepository, DbRepository>();
             services.AddTransient<ICategoryRepository, DbCategoryRepository>();
             services.AddTransient<IOrdersRepository, DbOrdersRepository>();
+            services.AddTransient<IWebServiceRepository, DbWebServiceRepository>();
 
             var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<AppDbContext>(options => {
