@@ -5,12 +5,13 @@
 }
 <table class="table table-sm table-striped">
     <thead>
-        <tr><th>Name</th><th>Category</th><th>Price</th></tr>
+        <tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th></tr>
     </thead>
     <tbody>
         @foreach (var p in Model)
         {
             <tr>
+                <td>@p.Id</td>
                 <td>@p.Name</td>
                 <td>@p.Category</td>
                 <td>$@p.Price.ToString("F2")</td>

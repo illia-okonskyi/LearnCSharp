@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using CodeFirst.Models;
 
 namespace CodeFirst
 {
@@ -14,6 +16,11 @@ namespace CodeFirst
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var conectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            services.AddDbContext<EfDbContext>(options => {
+                options.UseSqlServer(conectionString);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
