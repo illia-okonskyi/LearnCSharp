@@ -15,7 +15,20 @@
                 <td>@p.Name</td>
                 <td>@p.Category</td>
                 <td>$@p.Price.ToString("F2")</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <a asp-action="Edit"
+                           class="btn btn-sm btn-warning" asp-route-id="@p.Id">
+                            Edit
+                        </a>
+                        <input type="hidden" name="id" value="@p.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+<a asp-action="Create" class="btn btn-primary">Create New Product</a>
