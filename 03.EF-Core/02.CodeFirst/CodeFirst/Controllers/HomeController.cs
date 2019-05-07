@@ -5,16 +5,16 @@ namespace CodeFirst.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly EfDbContext _dbContext;
+        private readonly IProductsRepository _productsRepository;
 
-        public HomeController(EfDbContext dbContext)
+        public HomeController(IProductsRepository productsRepository)
         {
-            _dbContext = dbContext;
+            _productsRepository = productsRepository;
         }
 
         public IActionResult Index()
         {
-            return View(_dbContext.Products);
+            return View(_productsRepository.GetAllProducts());
         }
     }
 }
