@@ -5,6 +5,10 @@
 }
 
 <form asp-action="@(ViewBag.CreateMode ? "Create" : "Edit")" method="post">
+    <input name="old.Id" value="@Model?.Id" type="hidden" />
+    <input name="old.Name" value="@Model?.Name" type="hidden" />
+    <input name="old.Category" value="@Model?.Category" type="hidden" />
+    <input name="old.Price" value="@Model?.Price" type="hidden" />
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />

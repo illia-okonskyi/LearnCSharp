@@ -12,9 +12,12 @@ namespace CodeFirst.Controllers
             _productsRepository = productsRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string category = null, decimal? minPrice = null)
         {
-            return View(_productsRepository.GetAllProducts());
+            var products = _productsRepository.GetAllProducts(category, minPrice);
+            ViewBag.Category = category;
+            ViewBag.MinPrice = minPrice;
+            return View(products);
         }
 
         public IActionResult Create()
@@ -36,9 +39,10 @@ namespace CodeFirst.Controllers
             return View("Editor", _productsRepository.GetProduct(id));
         }
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(Product product, Product old)
         {
-            _productsRepository.UpdateProduct(product);
+            //_productsRepository.UpdateProduct(product);
+            _productsRepository.UpdateProductWithChangesTracking(product, old);
             return RedirectToAction(nameof(Index));
         }
 

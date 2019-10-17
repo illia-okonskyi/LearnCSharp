@@ -4,10 +4,11 @@ namespace CodeFirst.Models
 {
     public interface IProductsRepository
     {
-        IEnumerable<Product> GetAllProducts();
+        IEnumerable<Product> GetAllProducts(string category = null, decimal? minPrice = null);
         Product GetProduct(long id);
-        void CreateProduct(Product product);
+        void CreateProduct(Product newProduct);
         void UpdateProduct(Product product);
+        void UpdateProductWithChangesTracking(Product product, Product oldProduct);
         void DeleteProduct(long id);
     }
 }
