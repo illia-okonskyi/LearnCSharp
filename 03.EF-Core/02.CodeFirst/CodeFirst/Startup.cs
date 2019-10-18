@@ -32,12 +32,21 @@ namespace CodeFirst
             services.AddTransient<MigrationsManager>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            EfDbContext productContext,
+            EfCustomerContext customerContext)
         {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+
+            if (env.IsDevelopment())
+            {
+                SeedData.Seed(productContext);
+                SeedData.Seed(customerContext);
+            }
         }
     }
 }
