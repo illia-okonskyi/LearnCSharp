@@ -21,8 +21,13 @@ namespace CodeFirst
             services.AddDbContext<EfDbContext>(options => {
                 options.UseSqlServer(conectionString);
             });
-
             services.AddTransient<IProductsRepository, EfProductsRepository>();
+
+            string customerConString = Configuration["ConnectionStrings:CustomerConnection"];
+            services.AddDbContext<EfCustomerContext>(options => {
+                options.UseSqlServer(customerConString);
+            });
+            services.AddTransient<ICustomerRepository, EfCustomerRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
