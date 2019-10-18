@@ -26,5 +26,21 @@ namespace CodeFirst.Controllers
             _migrationsManager.Migrate(context, migration);
             return RedirectToAction(nameof(Index), new { context });
         }
+
+        [HttpPost]
+        public IActionResult Seed(string context)
+        {
+            _migrationsManager.ContextName = context;
+            SeedData.Seed(_migrationsManager.Context);
+            return RedirectToAction(nameof(Index), new { context });
+        }
+
+        [HttpPost]
+        public IActionResult Clear(string context)
+        {
+            _migrationsManager.ContextName = context;
+            SeedData.ClearData(_migrationsManager.Context);
+            return RedirectToAction(nameof(Index), new { context });
+        }
     }
 }
