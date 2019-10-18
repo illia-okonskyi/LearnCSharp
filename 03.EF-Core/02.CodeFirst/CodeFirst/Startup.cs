@@ -28,6 +28,8 @@ namespace CodeFirst
                 options.UseSqlServer(customerConString);
             });
             services.AddTransient<ICustomerRepository, EfCustomerRepository>();
+
+            services.AddTransient<MigrationsManager>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
