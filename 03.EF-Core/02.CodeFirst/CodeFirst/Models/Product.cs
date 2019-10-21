@@ -13,5 +13,8 @@
         public decimal Price { get; set; }
         public Colors Color { get; set; }
         public bool InStock { get; set; }
+
+        // Navigation property, allows navigation from one object to another: Product -> Supplier
+        public Supplier Supplier { get; set; }
     }
 }

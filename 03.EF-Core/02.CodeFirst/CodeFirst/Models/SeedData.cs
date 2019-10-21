@@ -11,19 +11,11 @@ namespace CodeFirst.Models
             {
                 if (context is EfDbContext productContext && productContext.Products.Count() == 0)
                 {
-                    foreach (var p in _products)
-                    {
-                        p.Id = 0;
-                    }
-                    productContext.Products.AddRange(_products);
+                    productContext.Products.AddRange(Products);
                 }
                 else if (context is EfCustomerContext customerContext && customerContext.Customers.Count() == 0)
                 {
-                    foreach (var c in _customers)
-                    {
-                        c.Id = 0;
-                    }
-                    customerContext.Customers.AddRange(_customers);
+                    customerContext.Customers.AddRange(Customers);
                 }
                 context.SaveChanges();
             }
@@ -42,22 +34,56 @@ namespace CodeFirst.Models
             context.SaveChanges();
         }
 
-        private static readonly Product[] _products = {
-            new Product { Name = "Kayak", Category = "Watersports", Price = 275, Color = Colors.Green, InStock = true },
-            new Product { Name = "Lifejacket", Category = "Watersports", Price = 48.95m, Color = Colors.Red, InStock = true },
-            new Product { Name = "Soccer Ball", Category = "Soccer", Price = 19.50m, Color = Colors.Blue, InStock = true },
-            new Product { Name = "Corner Flags", Category = "Soccer", Price = 34.95m, Color = Colors.Green, InStock = true },
-            new Product { Name = "Stadium", Category = "Soccer", Price = 79500, Color = Colors.Red, InStock = true },
-            new Product { Name = "Thinking Cap", Category = "Chess", Price = 16, Color = Colors.Blue, InStock = true },
-            new Product { Name = "Unsteady Chair", Category = "Chess", Price = 29.95m, Color = Colors.Green, InStock = true },
-            new Product { Name = "Human Chess Board", Category = "Chess", Price = 75, Color = Colors.Red, InStock = true },
-            new Product { Name = "Bling-Bling King", Category = "Chess", Price = 1200, Color = Colors.Blue, InStock = true }
-        };
+        private static Product[] Products
+        {
+            get
+            {
+                var products = new Product[]
+                {
+                    new Product { Name = "Kayak", Category = "Watersports", Price = 275, Color = Colors.Green, InStock = true },
+                    new Product { Name = "Lifejacket", Category = "Watersports", Price = 48.95m, Color = Colors.Red, InStock = true },
+                    new Product { Name = "Soccer Ball", Category = "Soccer", Price = 19.50m, Color = Colors.Blue, InStock = true },
+                    new Product { Name = "Corner Flags", Category = "Soccer", Price = 34.95m, Color = Colors.Green, InStock = true },
+                    new Product { Name = "Stadium", Category = "Soccer", Price = 79500, Color = Colors.Red, InStock = true },
+                    new Product { Name = "Thinking Cap", Category = "Chess", Price = 16, Color = Colors.Blue, InStock = true },
+                    new Product { Name = "Unsteady Chair", Category = "Chess", Price = 29.95m, Color = Colors.Green, InStock = true },
+                    new Product { Name = "Human Chess Board", Category = "Chess", Price = 75, Color = Colors.Red, InStock = true },
+                    new Product { Name = "Bling-Bling King", Category = "Chess", Price = 1200, Color = Colors.Blue, InStock = true }
+                };
 
-        private static readonly Customer[] _customers = {
-            new Customer { Name = "Alice Smith", City = "New York", Country = "USA" },
-            new Customer { Name = "Bob Jones", City = "Paris", Country = "France" },
-            new Customer { Name = "Charlie Davies", City = "London", Country = "UK" }
-        };
+                var s1 = new Supplier
+                {
+                    Name = "Surf Dudes",
+                    City = "San Jose",
+                    State = "CA"
+                };
+                var s2 = new Supplier
+                {
+                    Name = "Chess Kings",
+                    City = "Seattle",
+                    State = "WA"
+                };
+                products.First().Supplier = s1;
+                foreach (Product p in products.Where(p => p.Category == "Chess"))
+                {
+                    p.Supplier = s2;
+                }
+                return products;
+            }
+        }
+
+        private static Customer[] Customers
+        {
+            get
+            {
+                var customers = new Customer[]
+                {
+                    new Customer { Name = "Alice Smith", City = "New York", Country = "USA" },
+                    new Customer { Name = "Bob Jones", City = "Paris", Country = "France" },
+                    new Customer { Name = "Charlie Davies", City = "London", Country = "UK" }
+                };
+                return customers;
+            }
+        }
     }
 }

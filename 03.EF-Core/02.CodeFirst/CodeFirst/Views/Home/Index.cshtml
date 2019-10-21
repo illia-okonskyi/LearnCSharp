@@ -16,13 +16,31 @@
         </select>
         <label class="m-1">Min Price:</label>
         <input class="form-control" name="minPrice" value="@ViewBag.MinPrice" />
+        <div class="form-check m-1">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"
+                       name="includeRelated" value="true"
+                       checked="@(ViewBag.IncludeRelated == true)" />
+                Related Data
+            </label>
+            <input type="hidden" name="includeRelated" value="false" />
+        </div>
         <button class="btn btn-primary m-1">Filter</button>
     </form>
 </div>
 
 <table class="table table-sm table-striped">
     <thead>
-        <tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th></tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            @if (ViewBag.includeRelated)
+            {
+                <th>Supplier</th>
+            }
+        </tr>
     </thead>
     <tbody>
         @foreach (var p in Model)
@@ -32,6 +50,11 @@
                 <td>@p.Name</td>
                 <td>@p.Category</td>
                 <td>$@p.Price.ToString("F2")</td>
+                @if (ViewBag.IncludeRelated)
+                {
+                    <td>@p.Supplier?.Name</td>
+                }
+                <td>
                 <td>
                     <form asp-action="Delete" method="post">
                         <a asp-action="Edit"

@@ -4,7 +4,10 @@ namespace CodeFirst.Models
 {
     public interface IProductsRepository
     {
-        IEnumerable<Product> GetAllProducts(string category = null, decimal? minPrice = null);
+        IEnumerable<Product> GetAllProducts(
+            string category = null,
+            decimal? minPrice = null,
+            bool includeRelated = true);
         Product GetProduct(long id);
         void CreateProduct(Product newProduct);
         void UpdateProduct(Product product);

@@ -12,11 +12,15 @@ namespace CodeFirst.Controllers
             _productsRepository = productsRepository;
         }
 
-        public IActionResult Index(string category = null, decimal? minPrice = null)
+        public IActionResult Index(
+            string category = null,
+            decimal? minPrice = null,
+            bool includeRelated = true)
         {
-            var products = _productsRepository.GetAllProducts(category, minPrice);
+            var products = _productsRepository.GetAllProducts(category, minPrice, includeRelated);
             ViewBag.Category = category;
             ViewBag.MinPrice = minPrice;
+            ViewBag.IncludeRelated = includeRelated;
             return View(products);
         }
 

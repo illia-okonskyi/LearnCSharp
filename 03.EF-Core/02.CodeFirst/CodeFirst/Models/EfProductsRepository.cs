@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeFirst.Models
 {
@@ -13,7 +14,10 @@ namespace CodeFirst.Models
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Product> GetAllProducts(string category = null, decimal? minPrice = null)
+        public IEnumerable<Product> GetAllProducts(
+            string category = null,
+            decimal? minPrice = null,
+            bool includeRelated = true)
         {
             Debug.WriteLine($"ProductsRepo> GetAllProducts({category?? "<null>"}, {minPrice ?? 0})");
             IQueryable<Product> products = _dbContext.Products;
@@ -25,13 +29,17 @@ namespace CodeFirst.Models
             {
                 products = products.Where(p => p.Price >= minPrice);
             }
+            if (includeRelated)
+            {
+                products = products.Include(p => p.Supplier);
+            }
             return products;
         }
 
         public Product GetProduct(long id)
         {
             Debug.WriteLine($"ProductsRepo> GetProduct({id})");
-            return _dbContext.Products.Find(id);
+            return _dbContext.Products.Include(p => p.Supplier).First(p => p.Id == id);
         }
 
         public void CreateProduct(Product newProduct)
