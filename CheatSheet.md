@@ -15,6 +15,8 @@
 - SQL cache command-line tool: `dotnet sql-cache`
 	- Create cache: `dotnet sql-cache create "Server=(localdb)\MSSQLLocalDB;Database=SportsStore" "dbo" "SessionData"`
 
+- `IQueryable` has method `Load()` which can be used to explicitly load and cache the query results.
+
 ## ASP.NET Core MVC
 - Client-side validation: https://github.com/aspnet/jquery-validation-unobtrusive/
 	- Fails for float and decimal for non english format: https://github.com/aspnet/jquery-validation-unobtrusive/issues/27
