@@ -28,6 +28,7 @@ namespace CodeFirst
                 options.UseSqlServer(customerConString);
             });
             services.AddTransient<ICustomerRepository, EfCustomerRepository>();
+            services.AddTransient<ISupplierRepository, EfSupplierRepository>();
 
             services.AddTransient<MigrationsManager>();
         }
