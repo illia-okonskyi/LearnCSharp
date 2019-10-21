@@ -39,7 +39,11 @@ namespace CodeFirst.Models
         public Product GetProduct(long id)
         {
             Debug.WriteLine($"ProductsRepo> GetProduct({id})");
-            return _dbContext.Products.Include(p => p.Supplier).First(p => p.Id == id);
+            return _dbContext.Products
+                .Include(p => p.Supplier)
+                .ThenInclude(s => s.Contact)
+                .ThenInclude(c => c.Location)
+                .First(p => p.Id == id);
         }
 
         public void CreateProduct(Product newProduct)

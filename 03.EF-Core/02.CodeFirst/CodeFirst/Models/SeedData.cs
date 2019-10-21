@@ -51,11 +51,23 @@ namespace CodeFirst.Models
                     new Product { Name = "Bling-Bling King", Category = "Chess", Price = 1200, Color = Colors.Blue, InStock = true }
                 };
 
+                var hq = new ContactLocation
+                {
+                    LocationName = "Corporate HQ",
+                    Address = "200 Acme Way"
+                };
+                var bob = new ContactDetails
+                {
+                    Name = "Bob Smith",
+                    Phone = "555-107-1234",
+                    Location = hq
+                };
                 var acme = new Supplier
                 {
                     Name = "Acme Co",
                     City = "New York",
-                    State = "NY"
+                    State = "NY",
+                    Contact = bob
                 };
                 var s1 = new Supplier
                 {
