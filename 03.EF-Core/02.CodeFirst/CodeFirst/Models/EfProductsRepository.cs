@@ -79,6 +79,9 @@ namespace CodeFirst.Models
             dbEntity.Name = product.Name;
             dbEntity.Category = product.Category;
             dbEntity.Price = product.Price;
+            dbEntity.Supplier.Name = product.Supplier.Name;
+            dbEntity.Supplier.City = product.Supplier.City;
+            dbEntity.Supplier.State = product.Supplier.State;
 
             // Debug: log entity entry state
             var entry = _dbContext.Entry(dbEntity);
