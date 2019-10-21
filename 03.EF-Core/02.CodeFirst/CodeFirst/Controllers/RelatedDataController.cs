@@ -9,12 +9,21 @@ namespace CodeFirst.Controllers
 {
     public class RelatedDataController : Controller
     {
-        private ISupplierRepository _supplierRepository;
-        public RelatedDataController(ISupplierRepository supplierRepository)
+        private readonly ISupplierRepository _supplierRepository;
+        private readonly IGenericRepository<ContactDetails> _detailsRepository;
+        private readonly IGenericRepository<ContactLocation> _locationsRepository;
+
+        public RelatedDataController(ISupplierRepository supplierRepository,
+            IGenericRepository<ContactDetails> detailsRepository,
+            IGenericRepository<ContactLocation> locationsRepository)
         {
             _supplierRepository = supplierRepository;
+            _detailsRepository = detailsRepository;
+            _locationsRepository = locationsRepository;
         }
 
         public IActionResult Index() => View(_supplierRepository.GetAll());
+        public IActionResult Contacts() => View(_detailsRepository.GetAll());
+        public IActionResult Locations() => View(_locationsRepository.GetAll());
     }
 }

@@ -29,6 +29,8 @@ namespace CodeFirst
             });
             services.AddTransient<ICustomerRepository, EfCustomerRepository>();
             services.AddTransient<ISupplierRepository, EfSupplierRepository>();
+            services.AddTransient<IGenericRepository<ContactDetails>, EfGenericRepository<ContactDetails>>();
+            services.AddTransient<IGenericRepository<ContactLocation>, EfGenericRepository<ContactLocation>>();
 
             services.AddTransient<MigrationsManager>();
         }
