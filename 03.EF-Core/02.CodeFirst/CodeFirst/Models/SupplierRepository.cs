@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeFirst.Models
 {
@@ -27,7 +29,7 @@ namespace CodeFirst.Models
 
         public IEnumerable<Supplier> GetAll()
         {
-            return _dbContext.Suppliers;
+            return _dbContext.Suppliers.Include(s => s.Products);
         }
 
         public void Create(Supplier newDataObject)
