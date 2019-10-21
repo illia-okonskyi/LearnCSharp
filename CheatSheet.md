@@ -16,6 +16,7 @@
 	- Create cache: `dotnet sql-cache create "Server=(localdb)\MSSQLLocalDB;Database=SportsStore" "dbo" "SessionData"`
 
 - `IQueryable` has method `Load()` which can be used to explicitly load and cache the query results.
+- `IQueryable` has method `AsNoTracking()` which can be used to disable caching and change detection mechanism for the query
 
 ## ASP.NET Core MVC
 - Client-side validation: https://github.com/aspnet/jquery-validation-unobtrusive/
