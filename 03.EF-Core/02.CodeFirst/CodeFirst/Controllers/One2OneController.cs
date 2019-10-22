@@ -72,13 +72,9 @@ namespace CodeFirst.Controllers
 
                         var targetDetails = _dbContext.Set<ContactDetails>()
                             .FirstOrDefault(cd => cd.SupplierId == targetSupplierId);
-                        targetDetails.SupplierId = details.Supplier.Id;
-                        Supplier temp = new Supplier { Name = "temp" };
-                        details.Supplier = temp;
-                        _dbContext.SaveChanges();
+                        targetDetails.SupplierId = null;
                         details.SupplierId = targetSupplierId.Value;
-                        temp.Contact = null;
-                        _dbContext.Suppliers.Remove(temp);
+                        _dbContext.SaveChanges();
                     }
                 }
             }

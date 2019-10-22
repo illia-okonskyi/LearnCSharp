@@ -11,7 +11,9 @@
         // definition of the both properties: navigation and inverse. Both of this properties
         // must declare single object not collection. This will be dependet entity, so the table
         // must contain foreign key column.
-        public long SupplierId { get; set; }
+        // NOTE: The 1-to-1 relation applies the unique index on FK column with (1-to-0|1) or
+        //       without (1-to-1) filtered out NULL values
+        public long? SupplierId { get; set; }
         public Supplier Supplier { get; set; }
     }
 }
