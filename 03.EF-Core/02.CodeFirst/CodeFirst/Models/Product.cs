@@ -1,4 +1,6 @@
-﻿namespace CodeFirst.Models
+﻿using System.Collections.Generic;
+
+namespace CodeFirst.Models
 {
     public enum Colors
     {
@@ -22,5 +24,8 @@
         public long SupplierId { get; set; }
         // Navigation property, allows navigation from one object to another: Product -> Supplier
         public Supplier Supplier { get; set; }
+
+        // Inverse property for many-to-many relation
+        public IEnumerable<ProductShipmentJunction> ProductShipments { get; set; }
     }
 }

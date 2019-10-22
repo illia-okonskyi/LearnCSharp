@@ -12,6 +12,7 @@ namespace CodeFirst.Models
                 if (context is EfDbContext productContext && productContext.Products.Count() == 0)
                 {
                     productContext.Products.AddRange(Products);
+                    productContext.Set<Shipment>().AddRange(Shipments);
                 }
                 else if (context is EfCustomerContext customerContext && customerContext.Customers.Count() == 0)
                 {
@@ -26,6 +27,7 @@ namespace CodeFirst.Models
             if (context is EfDbContext productContext && productContext.Products.Count() > 0)
             {
                 productContext.Products.RemoveRange(productContext.Products);
+                productContext.Set<Shipment>().RemoveRange(productContext.Set<Shipment>());
             }
             else if (context is EfCustomerContext customerContext && customerContext.Customers.Count() > 0)
             {
@@ -98,6 +100,18 @@ namespace CodeFirst.Models
                     }
                 }
                 return products;
+            }
+        }
+
+        public static Shipment[] Shipments
+        {
+            get
+            {
+                return new Shipment[] {
+                    new Shipment { ShipperName = "Express Co",StartCity = "New York", EndCity = "San Jose"},
+                    new Shipment { ShipperName = "Tortoise Shipping", StartCity = "Boston", EndCity = "Chicago"},
+                    new Shipment { ShipperName = "Air Express", StartCity = "Miami", EndCity = "Seattle"}
+                };
             }
         }
 
