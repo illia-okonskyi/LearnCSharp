@@ -13,5 +13,10 @@ namespace ModelFirst.Models.Manual
 
         [ForeignKey("StyleId")]
         public Style Style { get; set; }
+
+        // FK column
+        public long WidthId { get; set; }
+        // Navigation property
+        public ShoeWidth Width { get; set; }
     }
 }

@@ -22,5 +22,47 @@ namespace ModelFirst.Models.Manual
 
         public DbSet<Shoe> Shoes { get; set; }
         public DbSet<Style> ShoeStyles { get; set; }
+        public DbSet<ShoeWidth> ShoeWidths { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // FluentAPI alternative for [Table] attribute
+            modelBuilder.Entity<ShoeWidth>().ToTable("Fittings");
+            // FluentAPI alternative for [Key] attribute
+            modelBuilder.Entity<ShoeWidth>().HasKey(t => t.UniqueIdent);
+            // FluentAPI alternative for [Column] attribute
+            modelBuilder.Entity<ShoeWidth>().Property(t => t.UniqueIdent).HasColumnName("Id");
+            modelBuilder.Entity<ShoeWidth>().Property(t => t.WidthName).HasColumnName("Name");
+
+            modelBuilder.Entity<Shoe>().Property(s => s.WidthId).HasColumnName("FittingId");
+            // FluentAPI alternative for [ForeignKey] and [InverseProperty] attributes,
+            // configures realtion
+            // NOTE: Methods of the EntityBulder for relations:
+            //       - HasOne - This method is used to start describing a relationship where the 
+            //                  selected entity class has a relationship with a single object of
+            //                  another type.The argument selects the navigation property, either by
+            //                  name or by using a lambda expression.
+            //       - HasMany - This method is used to start describing a relationship where the
+            //                   selected entity class has a relationship with many objects of
+            //                   another  type.The argument selects the navigation property, either
+            //                   by name or by using a lambda expression.
+            // NOTE: Methods for completing the relations:
+            //       - WithMany - This method is used to select the inverse navigation property in a
+            //                    one-to-many relationship.
+            //       - WithOne - This method is used to select the inverse navigation property in a
+            //                   one-to-one relationship.
+            // NOTE: Method for specifying the FK and it's constraints
+            //       - HasForeignKey - This method is used to select the foreign key property for
+            //                         the relationship.
+            //       - IsRequired - This method is used to specify whether the relationship is
+            //                      required or optional.
+            //       - HasConstraintName - This method is used to specify the name of the FK or PK
+            //                             constraint
+            modelBuilder.Entity<Shoe>()
+                .HasOne(s => s.Width)
+                .WithMany(w => w.Products)
+                .HasForeignKey(s => s.WidthId)
+                .IsRequired(true);
+        }
     }
 }
