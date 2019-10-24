@@ -13,6 +13,7 @@
                 <th>Color</th>
                 <th>Slogan</th>
                 <th>Categories</th>
+                <th>Fitting</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                     <td>
                         @String.Join(", ", s.ShoeCategoryJunction.Select(j => j.Category.Name))
                     </td>
+                    <td>@s.Fitting.Name</td>
                 </tr>
             }
         </tbody>
