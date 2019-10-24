@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using ModelFirst.Models.Scaffold;
+using ModelFirst.Models.Manual;
 
 namespace ModelFirst
 {
@@ -19,6 +20,7 @@ namespace ModelFirst
 
             string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<ScaffoldContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<ManualContext>(options => options.UseSqlServer(connectionString));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
