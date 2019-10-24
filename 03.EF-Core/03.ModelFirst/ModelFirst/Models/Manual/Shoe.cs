@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ModelFirst.Models.Manual
 {
@@ -18,5 +19,8 @@ namespace ModelFirst.Models.Manual
         public long WidthId { get; set; }
         // Navigation property
         public ShoeWidth Width { get; set; }
+
+        public SalesCampaign Campaign { get; set; }
+        public IEnumerable<ShoeCategoryJunction> Categories { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace ModelFirst.Models.Manual
         public DbSet<Shoe> Shoes { get; set; }
         public DbSet<Style> ShoeStyles { get; set; }
         public DbSet<ShoeWidth> ShoeWidths { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
