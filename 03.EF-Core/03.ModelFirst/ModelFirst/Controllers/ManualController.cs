@@ -9,6 +9,10 @@ namespace ModelFirst.Controllers
 
         public ManualController(ManualContext context) => _context = context;
 
-        public IActionResult Index() => View(_context.Shoes);
+        public IActionResult Index()
+        {
+            ViewBag.Styles = _context.ShoeStyles;
+            return View(_context.Shoes);
+        }
     }
 }

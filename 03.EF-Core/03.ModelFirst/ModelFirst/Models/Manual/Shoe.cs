@@ -1,9 +1,17 @@
-﻿namespace ModelFirst.Models.Manual
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ModelFirst.Models.Manual
 {
     public class Shoe
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+
+        [Column("ColorId")]
+        public long StyleId { get; set; }
+
+        [ForeignKey("StyleId")]
+        public Style Style { get; set; }
     }
 }
