@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModelFirst.Models.Manual;
 
@@ -21,6 +23,39 @@ namespace ModelFirst.Controllers
                 .Include(s => s.Width)
                 .Include(s => s.Categories)
                 .ThenInclude(j => j.Category));
+        }
+
+        public IActionResult Edit(long id)
+        {
+            ViewBag.Styles = _context.ShoeStyles;
+            ViewBag.Widths = _context.ShoeWidths;
+            ViewBag.Categories = _context.Categories;
+            return View(_context.Shoes
+                .Include(s => s.Style)
+                .Include(s => s.Campaign)
+                .Include(s => s.Width)
+                .Include(s => s.Categories)
+                .ThenInclude(j => j.Category).First(s => s.Id == id));
+        }
+
+        [HttpPost]
+        public IActionResult Update(
+            Shoe shoe,
+            long[] newCategoryIds,
+            ShoeCategoryJunction[] oldJunctions)
+        {
+            var unchangedJunctions = oldJunctions.Where(j => newCategoryIds.Contains(j.CategoryId));
+            _context.Set<ShoeCategoryJunction>().RemoveRange(oldJunctions.Except(unchangedJunctions));
+            shoe.Categories = newCategoryIds.Except(unchangedJunctions.Select(j => j.CategoryId))
+                .Select(id => new ShoeCategoryJunction
+                {
+                    ShoeId = shoe.Id,
+                    CategoryId = id
+                })
+                .ToList();
+            _context.Shoes.Update(shoe);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
