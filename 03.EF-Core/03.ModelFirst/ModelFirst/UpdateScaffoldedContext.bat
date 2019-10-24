@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Server=(localdb)\MSSQLLocalDB;Database=ModelFirstDb" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Models/Scaffold" --context ScaffoldContext --force --no-build
