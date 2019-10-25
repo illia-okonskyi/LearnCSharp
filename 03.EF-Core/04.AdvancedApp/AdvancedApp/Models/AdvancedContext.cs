@@ -11,7 +11,6 @@ namespace AdvancedApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Snippet 1
             // NOTE: The Hi-Lo strategy is an optimization that allows Entity Framework Core to
             //       create primary key values, instead of the database server, while still ensuring
             //       those values are unique. The idea is to get from the DB server the next LO 
@@ -23,24 +22,12 @@ namespace AdvancedApp.Models
             //       is inserted to obtain it's unique key (primary key)
             //modelBuilder.Entity<Employee>().Property(e => e.Id).ForSqlServerUseSequenceHiLo();
 
-            // Snippet 2
-            //modelBuilder.Entity<Employee>().HasIndex(e => e.SSN).HasName("SSNIndex").IsUnique();
-
             modelBuilder.Entity<Employee>().Ignore(e => e.Id);
-            // Snippet 3-4
-            //modelBuilder.Entity<Employee>().HasKey(e => e.SSN);
             modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });
-
-            // Snippet 3
-            //modelBuilder.Entity<Employee>().HasAlternateKey(e => e.SSN);
 
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
                 .WithOne(e => e.OtherIdentity)
-                // Snippet 3
-                //.HasPrincipalKey<Employee>(e => e.SSN)
-                // Snippet 3-4
-                //.HasForeignKey<SecondaryIdentity>(s => s.PrimarySSN);
                 .HasPrincipalKey<Employee>(e => new { e.SSN, e.FirstName, e.FamilyName})
                 .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName});
         }
