@@ -53,5 +53,14 @@ namespace AdvancedApp.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public IActionResult Delete(Employee employee)
+        {
+            _context.Attach(employee);
+            employee.SoftDeleted = true;
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

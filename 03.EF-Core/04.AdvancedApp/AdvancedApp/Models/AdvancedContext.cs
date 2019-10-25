@@ -8,7 +8,9 @@ namespace AdvancedApp.Models
             : base(options)
         {
             // Configure default change-tracking behavior for all the requests
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+
         }
 
         public DbSet<Employee> Employees { get; set; }
@@ -25,6 +27,14 @@ namespace AdvancedApp.Models
             //       generation strategy is Identity when EF Core examines DB every time new value
             //       is inserted to obtain it's unique key (primary key)
             //modelBuilder.Entity<Employee>().Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+
+
+            // NOTE: A query filter is applied to all of the queries made in the application for a
+            //       specific entity class. One useful application of the query filter is to
+            //       implement a “soft delete” feature that marks objects that are deleted without
+            //       removing them from the database, allowing data to be restored if it has been
+            //       deleted by mistake.
+            modelBuilder.Entity<Employee>().HasQueryFilter(e => !e.SoftDeleted);
 
             modelBuilder.Entity<Employee>().Ignore(e => e.Id);
             modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });

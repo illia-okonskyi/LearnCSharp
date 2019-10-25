@@ -9,5 +9,7 @@
         public decimal Salary { get; set; }
 
         public SecondaryIdentity OtherIdentity { get; set; }
+
+        public bool SoftDeleted { get; set; } = false;
     }
 }
