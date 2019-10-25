@@ -44,6 +44,12 @@
         }
     </tbody>
 </table>
+@if (ViewBag.PageSize != null)
+{
+    <h4 class="bg-info p-2 text-center text-white">
+        Page Size: @ViewBag.PageSize bytes
+    </h4>
+}
 <div class="text-center">
     <a asp-action="Edit" class="btn btn-primary">Create</a>
 </div>

@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdvancedApp.Models;
@@ -17,7 +19,7 @@ namespace AdvancedApp.Controllers
 
         public HomeController(AdvancedContext context) => _context = context;
 
-        public IActionResult Index(string searchTerm)
+        public async Task<IActionResult> Index(string searchTerm)
         {
             IQueryable<Employee> employees = _context.Employees;
             if (!string.IsNullOrEmpty(searchTerm))
@@ -31,7 +33,10 @@ namespace AdvancedApp.Controllers
                 //       - [^ chars] - This wildcard matches any single character not within a set.
                 employees = employees.Where(e => EF.Functions.Like(e.FirstName, searchTerm));
             }
-            return View(employees.ToListAsync());
+            HttpClient client = new HttpClient();
+            ViewBag.PageSize = (await client.GetAsync("http://apress.com"))
+                .Content.Headers.ContentLength;
+            return View(await employees.ToListAsync());
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
