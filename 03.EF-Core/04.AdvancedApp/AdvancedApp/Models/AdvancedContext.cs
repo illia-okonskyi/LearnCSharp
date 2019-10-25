@@ -27,7 +27,10 @@ namespace AdvancedApp.Models
             //modelBuilder.Entity<Employee>().HasIndex(e => e.SSN).HasName("SSNIndex").IsUnique();
 
             modelBuilder.Entity<Employee>().Ignore(e => e.Id);
-            modelBuilder.Entity<Employee>().HasKey(e => e.SSN);
+            // Snippet 3-4
+            //modelBuilder.Entity<Employee>().HasKey(e => e.SSN);
+            modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });
+
             // Snippet 3
             //modelBuilder.Entity<Employee>().HasAlternateKey(e => e.SSN);
 
@@ -36,7 +39,10 @@ namespace AdvancedApp.Models
                 .WithOne(e => e.OtherIdentity)
                 // Snippet 3
                 //.HasPrincipalKey<Employee>(e => e.SSN)
-                .HasForeignKey<SecondaryIdentity>(s => s.PrimarySSN);
+                // Snippet 3-4
+                //.HasForeignKey<SecondaryIdentity>(s => s.PrimarySSN);
+                .HasPrincipalKey<Employee>(e => new { e.SSN, e.FirstName, e.FamilyName})
+                .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName});
         }
     }
 }
