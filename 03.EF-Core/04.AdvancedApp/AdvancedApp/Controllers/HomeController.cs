@@ -17,9 +17,21 @@ namespace AdvancedApp.Controllers
 
         public HomeController(AdvancedContext context) => _context = context;
 
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm)
         {
-            return View(_context.Employees.AsNoTracking());
+            IQueryable<Employee> employees = _context.Employees;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                // NOTE: Entity Framework Core supports the SQL LIKE expression for IQueryable,
+                //       which means that queries can be performed using search patterns.
+                //       Wildcards are next:
+                //       - % - This wildcard matches any string of zero or more characters.
+                //       - _ - This wildcard matches any single character.
+                //       - [chars] - This wildcard matches any single character within a set.
+                //       - [^ chars] - This wildcard matches any single character not within a set.
+                employees = employees.Where(e => EF.Functions.Like(e.FirstName, searchTerm));
+            }
+            return View(employees.ToListAsync());
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
