@@ -21,6 +21,8 @@ namespace AdvancedApp.Models
             //       generation strategy is Identity when EF Core examines DB every time new value
             //       is inserted to obtain it's unique key (primary key)
             modelBuilder.Entity<Employee>().Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+
+            modelBuilder.Entity<Employee>().HasIndex(e => e.SSN).HasName("SSNIndex").IsUnique();
         }
     }
 }

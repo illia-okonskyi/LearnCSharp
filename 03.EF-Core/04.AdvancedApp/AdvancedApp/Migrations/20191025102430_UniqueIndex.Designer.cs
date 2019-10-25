@@ -3,14 +3,16 @@ using AdvancedApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdvancedApp.Migrations
 {
     [DbContext(typeof(AdvancedContext))]
-    partial class AdvancedContextModelSnapshot : ModelSnapshot
+    [Migration("20191025102430_UniqueIndex")]
+    partial class UniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,12 +32,16 @@ namespace AdvancedApp.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<string>("SSN")
-                        .IsRequired();
+                    b.Property<string>("SSN");
 
                     b.Property<decimal>("Salary");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SSN")
+                        .IsUnique()
+                        .HasName("SSNIndex")
+                        .HasFilter("[SSN] IS NOT NULL");
 
                     b.ToTable("Employees");
                 });
