@@ -16,26 +16,20 @@ namespace AdvancedApp.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AdvancedApp.Models.Employee", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:HiLoSequenceName", "EntityFrameworkHiLoSequence")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+                    b.Property<string>("SSN")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FamilyName");
 
                     b.Property<string>("FirstName");
 
-                    b.Property<string>("SSN")
-                        .IsRequired();
-
                     b.Property<decimal>("Salary");
 
-                    b.HasKey("Id");
+                    b.HasKey("SSN");
 
                     b.ToTable("Employees");
                 });
@@ -65,8 +59,7 @@ namespace AdvancedApp.Migrations
                 {
                     b.HasOne("AdvancedApp.Models.Employee", "PrimaryIdentity")
                         .WithOne("OtherIdentity")
-                        .HasForeignKey("AdvancedApp.Models.SecondaryIdentity", "PrimarySSN")
-                        .HasPrincipalKey("AdvancedApp.Models.Employee", "SSN");
+                        .HasForeignKey("AdvancedApp.Models.SecondaryIdentity", "PrimarySSN");
                 });
 #pragma warning restore 612, 618
         }

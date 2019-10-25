@@ -16,17 +16,26 @@ namespace AdvancedApp.Controllers
             return View(_context.Employees);
         }
 
-        public IActionResult Edit(long id)
+        // Snippet 1
+        //public IActionResult Edit(long id)
+        public IActionResult Edit(string SSN)
         {
-            return View(id == default(long)
+            // Snippet 1
+            //return View(id == default(long)
+            //    ? new Employee()
+            //    : _context.Employees.Include(e => e.OtherIdentity).First(e => e.Id == id));
+
+            return View(string.IsNullOrWhiteSpace(SSN)
                 ? new Employee()
-                : _context.Employees.Include(e => e.OtherIdentity).First(e => e.Id == id));
+                : _context.Employees.Include(e => e.OtherIdentity).First(e => e.SSN == SSN));
         }
 
         [HttpPost]
         public IActionResult Update(Employee employee)
         {
-            if (employee.Id == default(long))
+            // Snippet 1
+            //if (employee.Id == default(long))
+            if (_context.Employees.Count(e => e.SSN == employee.SSN) == 0)
             {
                 _context.Add(employee);
             }
