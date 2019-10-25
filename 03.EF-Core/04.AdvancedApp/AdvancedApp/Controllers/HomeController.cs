@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,26 +19,25 @@ namespace AdvancedApp.Controllers
     {
         private readonly AdvancedContext _context;
 
+        // NOTE: Entity Framework Core supports the SQL LIKE expression for IQueryable,
+        //       which means that queries can be performed using search patterns.
+        //       Wildcards are next:
+        //       - % - This wildcard matches any string of zero or more characters.
+        //       - _ - This wildcard matches any single character.
+        //       - [chars] - This wildcard matches any single character within a set.
+        //       - [^ chars] - This wildcard matches any single character not within a set.
+        private static readonly Func<AdvancedContext, string, IEnumerable<Employee>> _query
+            = EF.CompileQuery((AdvancedContext context, string searchTerm) =>
+                context.Employees.Where(e => EF.Functions.Like(e.FirstName, searchTerm))
+            );
+
         public HomeController(AdvancedContext context) => _context = context;
 
-        public async Task<IActionResult> Index(string searchTerm)
+        public IActionResult Index(string searchTerm)
         {
-            IQueryable<Employee> employees = _context.Employees;
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                // NOTE: Entity Framework Core supports the SQL LIKE expression for IQueryable,
-                //       which means that queries can be performed using search patterns.
-                //       Wildcards are next:
-                //       - % - This wildcard matches any string of zero or more characters.
-                //       - _ - This wildcard matches any single character.
-                //       - [chars] - This wildcard matches any single character within a set.
-                //       - [^ chars] - This wildcard matches any single character not within a set.
-                employees = employees.Where(e => EF.Functions.Like(e.FirstName, searchTerm));
-            }
-            HttpClient client = new HttpClient();
-            ViewBag.PageSize = (await client.GetAsync("http://apress.com"))
-                .Content.Headers.ContentLength;
-            return View(await employees.ToListAsync());
+            return View(string.IsNullOrEmpty(searchTerm)
+                ? _context.Employees
+                : _query(_context, searchTerm));
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
