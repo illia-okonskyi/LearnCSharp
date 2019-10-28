@@ -8,7 +8,7 @@
 </h4>
 <form asp-action="Update" method="post">
     <input type="hidden" asp-for="Id" />
-    <input type="hidden" name="originalSalary" value="@Model.Salary" />
+    <input type="hidden" asp-for="RowVersion" />
     <div class="form-group">
         <label class="form-control-label" asp-for="SSN"></label>
         <input class="form-control" asp-for="SSN" readonly="@Model.SSN" />

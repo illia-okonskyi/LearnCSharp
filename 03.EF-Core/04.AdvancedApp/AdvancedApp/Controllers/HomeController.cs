@@ -50,7 +50,7 @@ namespace AdvancedApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Employee employee, decimal originalSalary)
+        public IActionResult Update(Employee employee)
         {
             var hasExisting = _context.Employees
                 .Count(e => e.SSN == employee.SSN &&
@@ -62,16 +62,15 @@ namespace AdvancedApp.Controllers
             }
             else
             {
-                // Produces query:
-                // UPDATE [Employees] SET [LastUpdated] = @p0, [Salary] = @p1
-                // WHERE[SSN] = @p2 AND [FirstName] = @p3 AND [FamilyName] = @p4 AND [Salary] = @p5;
-                // Note that Salary fields is included to the query
+                // It is important not to query the database for the current RowVersion value
+                // All updates — regardless of the properties they modify—will cause a change that
+                // can be used to detect concurrent updates
                 var e = new Employee
                 {
                     SSN = employee.SSN,
                     FirstName = employee.FirstName,
                     FamilyName = employee.FamilyName,
-                    Salary = originalSalary
+                    RowVersion = employee.RowVersion
                 };
                 _context.Employees.Attach(e);
                 e.Salary = employee.Salary;

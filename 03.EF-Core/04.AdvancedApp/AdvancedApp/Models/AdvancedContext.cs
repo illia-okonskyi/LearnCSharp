@@ -57,12 +57,15 @@ namespace AdvancedApp.Models
             modelBuilder.Entity<Employee>().Property(e => e.Salary)
                 .HasColumnType("decimal(8,2)")
                 .HasField("databaseSalary")
-                .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .IsConcurrencyToken();
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
             
             // Declared shadow property. No attribute alternative is available
             modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated")
                 .HasDefaultValue(new DateTime(2000, 1, 1));
+
+            // Attribute alternative is [TimeStamp] attribute. Row version property must be byte[]
+            // type to avoid formatting issues
+            modelBuilder.Entity<Employee>().Property(e => e.RowVersion).IsRowVersion();
 
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
