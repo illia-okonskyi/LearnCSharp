@@ -35,9 +35,7 @@ namespace AdvancedApp.Controllers
 
         public IActionResult Index(string searchTerm)
         {
-            return View(string.IsNullOrEmpty(searchTerm)
-                ? _context.Employees
-                : _query(_context, searchTerm));
+            return View(_context.Employees.Include(e => e.OtherIdentity));
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
@@ -46,27 +44,23 @@ namespace AdvancedApp.Controllers
                 ? new Employee()
                 : _context.Employees
                     .Include(e => e.OtherIdentity)
-                    .AsNoTracking()
                     .First(e => e.SSN == SSN && e.FirstName == firstName && e.FamilyName == familyName));
         }
 
         [HttpPost]
         public IActionResult Update(Employee employee)
         {
-            var existing = _context.Employees
-                .AsTracking()
-                .First(e => e.SSN == employee.SSN && e.FirstName == employee.FirstName && e.FamilyName == employee.FamilyName);
-            // NOTE: Now `existing` is being change tracked
-            //       Change tracking for concrete entry can be disabled via next statement
-            //       _context.Entry(existing).State = EntityState.Detached;
-
-            if (existing == null)
+            var hasExisting = _context.Employees.Count(e =>
+                e.SSN == employee.SSN &&
+                e.FirstName == employee.FirstName &&
+                e.FamilyName == employee.FamilyName) > 0;
+            if (!hasExisting)
             {
                 _context.Add(employee);
             }
             else
             {
-                existing.Salary = employee.Salary;
+                _context.Update(employee);
             }
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

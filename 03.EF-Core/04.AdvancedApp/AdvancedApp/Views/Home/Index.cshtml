@@ -12,6 +12,8 @@
             <th>First Name</th>
             <th>Family Name</th>
             <th>Salary</th>
+            <th>Other Name</th>
+            <th>In Use</th>
             <th></th>
         </tr>
     </thead>
@@ -25,6 +27,8 @@
                 <td>@e.FirstName</td>
                 <td>@e.FamilyName</td>
                 <td>@e.Salary</td>
+                <td>@(e.OtherIdentity?.Name ?? "(None)")</td>
+                <td>@(e.OtherIdentity?.InActiveUse.ToString() ?? "(N/A)")</td>
                 <td class="text-right">
                     <form>
                         <input type="hidden" name="SSN" value="@e.SSN" />
