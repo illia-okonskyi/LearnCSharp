@@ -84,6 +84,14 @@ namespace AdvancedApp.Controllers
         [HttpPost]
         public IActionResult Delete(Employee employee)
         {
+            // NOTE: For ClientSetNull delete behavior: 
+            //       Force load the target entity for consequent delete
+            //       Isn't required if there is the PK property is provided in the query before
+            //_context.Set<SecondaryIdentity>()
+            //    .FirstOrDefault(id =>
+            //        id.PrimarySSN == employee.SSN &&
+            //        id.PrimaryFirstName == employee.FirstName &&
+            //        id.PrimaryFamilyName == employee.FamilyName);
             _context.Remove(employee);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

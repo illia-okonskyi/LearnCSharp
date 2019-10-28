@@ -37,6 +37,7 @@
                         <input type="hidden" name="Firstname" value="@e.FirstName" />
                         <input type="hidden" name="FamilyName" value="@e.FamilyName" />
                         <input type="hidden" name="RowVersion" asp-for="@e.RowVersion" />
+                        <input type="hidden" name="OtherIdentity.Id" value="@e.OtherIdentity.Id" />
                         <button type="submit" asp-action="Delete" formmethod="post"
                                 class="btn btn-sm btn-danger">
                             Delete
