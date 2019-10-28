@@ -27,9 +27,16 @@
                         <input type="hidden" name="FirstName" value="@e.FirstName" />
                         <input type="hidden" name="FamilyName"
                                value="@e.FamilyName" />
+                        <input type="hidden" name="RowVersion"
+                               asp-for="@e.RowVersion" />
+                        <input type="hidden" name="OtherIdentity.Id"
+                               value="@e.OtherIdentity.Id" />
                         <button asp-action="Restore"
                                 class="btn btn-sm btn-success">
                             Restore
+                        </button>
+                        <button asp-action="Delete" class="btn btn-sm btn-danger">
+                            Delete
                         </button>
                     </form>
                 </td>
@@ -37,3 +44,8 @@
         }
     </tbody>
 </table>
+<div class="text-center">
+    <form method="post" asp-action="DeleteAll">
+        <button type="submit" class="btn btn-danger">Delete All</button>
+    </form>
+</div>

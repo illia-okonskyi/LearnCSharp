@@ -35,10 +35,12 @@ namespace AdvancedApp.Controllers
 
         public IActionResult Index(string searchTerm)
         {
-            ViewBag.Secondaries = _context.Set<SecondaryIdentity>();
-            return View(_context.Employees
+            IEnumerable<Employee> data = _context.Employees
                 .Include(e => e.OtherIdentity)
-                .OrderByDescending(e => EF.Property<DateTime>(e, "LastUpdated")));
+                .OrderByDescending(e => e.LastUpdated)
+                .ToArray();
+            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+            return View(data);
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
@@ -102,16 +104,20 @@ namespace AdvancedApp.Controllers
 
             // Re-creating SetNull/ClientSetNull delete behavior for Restrict delete behavior.
             // We have must have the OtherIdentity.Id property delivered from the MVC model binder
-            if (employee.OtherIdentity != null)
-            {
-                var identity = _context.Set<SecondaryIdentity>().Find(employee.OtherIdentity.Id);
-                identity.PrimarySSN = null;
-                identity.PrimaryFirstName = null;
-                identity.PrimaryFamilyName = null;
-            }
-            employee.OtherIdentity = null;
+            //if (employee.OtherIdentity != null)
+            //{
+            //    var identity = _context.Set<SecondaryIdentity>().Find(employee.OtherIdentity.Id);
+            //    identity.PrimarySSN = null;
+            //    identity.PrimaryFirstName = null;
+            //    identity.PrimaryFamilyName = null;
+            //}
+            //employee.OtherIdentity = null;
 
-            _context.Remove(employee);
+            //_context.Remove(employee);
+
+            _context.Employees.Attach(employee);
+            employee.SoftDeleted = true;
+
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
