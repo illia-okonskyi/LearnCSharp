@@ -67,11 +67,22 @@ namespace AdvancedApp.Models
             // type to avoid formatting issues
             modelBuilder.Entity<Employee>().Property(e => e.RowVersion).IsRowVersion();
 
+            // The OnDelete() FluentAPI method configures delete behavior for entity.
+            // There is no attribute alternative
+            // NOTE: The DeleteBehavior Values
+            //       - Cascade - The dependent entity is deleted automatically along with the
+            //                   principal entity.
+            //       - SetNull - The primary key of the dependent entity is set to null by the
+            //                   database server (if this feature is supported).
+            //       - ClientSetNull - The primary key of the dependent entity is set to null by
+            //                         EF Core. Target entities must be loaded by the EF Core
+            //       - Restrict - No change is made to the dependent entity.
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
                 .WithOne(e => e.OtherIdentity)
                 .HasPrincipalKey<Employee>(e => new { e.SSN, e.FirstName, e.FamilyName})
-                .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName});
+                .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName})
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Attribute alternative is [MaxLength]
             modelBuilder.Entity<SecondaryIdentity>().Property(e => e.Name).HasMaxLength(100);
