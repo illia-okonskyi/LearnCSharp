@@ -35,7 +35,9 @@ namespace AdvancedApp.Controllers
 
         public IActionResult Index(string searchTerm)
         {
-            return View(_context.Employees.Include(e => e.OtherIdentity));
+            return View(_context.Employees
+                .Include(e => e.OtherIdentity)
+                .OrderByDescending(e => EF.Property<DateTime>(e, "LastUpdated")));
         }
 
         public IActionResult Edit(string SSN, string firstName, string familyName)
@@ -50,17 +52,20 @@ namespace AdvancedApp.Controllers
         [HttpPost]
         public IActionResult Update(Employee employee)
         {
-            var hasExisting = _context.Employees.Count(e =>
-                e.SSN == employee.SSN &&
-                e.FirstName == employee.FirstName &&
-                e.FamilyName == employee.FamilyName) > 0;
+            Employee existing = _context.Employees.Find(employee.SSN,
+                employee.FirstName,
+                employee.FamilyName);
+            var hasExisting = existing != null;
+
             if (!hasExisting)
             {
+                _context.Entry(employee).Property("LastUpdated").CurrentValue = System.DateTime.Now;
                 _context.Add(employee);
             }
             else
             {
-                _context.Update(employee);
+                existing.Salary = employee.Salary;
+                _context.Entry(existing).Property("LastUpdated").CurrentValue = System.DateTime.Now;
             }
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

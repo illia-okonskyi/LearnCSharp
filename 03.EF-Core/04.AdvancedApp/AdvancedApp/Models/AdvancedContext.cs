@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdvancedApp.Models
 {
@@ -55,6 +56,9 @@ namespace AdvancedApp.Models
                 .HasColumnType("decimal(8,2)")
                 .HasField("databaseSalary")
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
+            
+            // Declared shadow property. No attribute alternative is available
+            modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated");
 
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
