@@ -50,21 +50,32 @@ namespace AdvancedApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Employee employee)
+        public IActionResult Update(Employee employee, decimal originalSalary)
         {
-            Employee existing = _context.Employees.Find(employee.SSN,
-                employee.FirstName,
-                employee.FamilyName);
-            var hasExisting = existing != null;
-
+            var hasExisting = _context.Employees
+                .Count(e => e.SSN == employee.SSN &&
+                    e.FirstName == employee.FirstName &&
+                    e.FamilyName == employee.FamilyName) > 0;
             if (!hasExisting)
             {
                 _context.Add(employee);
             }
             else
             {
-                existing.Salary = employee.Salary;
-                _context.Entry(existing).Property("LastUpdated").CurrentValue = System.DateTime.Now;
+                // Produces query:
+                // UPDATE [Employees] SET [LastUpdated] = @p0, [Salary] = @p1
+                // WHERE[SSN] = @p2 AND [FirstName] = @p3 AND [FamilyName] = @p4 AND [Salary] = @p5;
+                // Note that Salary fields is included to the query
+                var e = new Employee
+                {
+                    SSN = employee.SSN,
+                    FirstName = employee.FirstName,
+                    FamilyName = employee.FamilyName,
+                    Salary = originalSalary
+                };
+                _context.Employees.Attach(e);
+                e.Salary = employee.Salary;
+                e.LastUpdated = DateTime.Now;
             }
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

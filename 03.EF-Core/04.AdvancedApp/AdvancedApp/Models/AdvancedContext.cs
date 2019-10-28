@@ -52,10 +52,13 @@ namespace AdvancedApp.Models
             //                 always use the backing field.
             //       - Property - This value tells Entity Framework Core to always use the property
             //                    and ignore the backing field.
+            // The [ConcurrencyCheck] attribute is used as alternative the FluentAPI method
+            // IsConcurrencyToken()
             modelBuilder.Entity<Employee>().Property(e => e.Salary)
                 .HasColumnType("decimal(8,2)")
                 .HasField("databaseSalary")
-                .UsePropertyAccessMode(PropertyAccessMode.Field);
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .IsConcurrencyToken();
             
             // Declared shadow property. No attribute alternative is available
             modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated")
