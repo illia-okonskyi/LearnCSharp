@@ -82,7 +82,7 @@ namespace AdvancedApp.Models
                 .WithOne(e => e.OtherIdentity)
                 .HasPrincipalKey<Employee>(e => new { e.SSN, e.FirstName, e.FamilyName})
                 .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName})
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             // Attribute alternative is [MaxLength]
             modelBuilder.Entity<SecondaryIdentity>().Property(e => e.Name).HasMaxLength(100);
