@@ -35,6 +35,7 @@ namespace AdvancedApp.Controllers
 
         public IActionResult Index(string searchTerm)
         {
+            ViewBag.Secondaries = _context.Set<SecondaryIdentity>();
             return View(_context.Employees
                 .Include(e => e.OtherIdentity)
                 .OrderByDescending(e => EF.Property<DateTime>(e, "LastUpdated")));
@@ -83,8 +84,7 @@ namespace AdvancedApp.Controllers
         [HttpPost]
         public IActionResult Delete(Employee employee)
         {
-            _context.Attach(employee);
-            employee.SoftDeleted = true;
+            _context.Remove(employee);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }

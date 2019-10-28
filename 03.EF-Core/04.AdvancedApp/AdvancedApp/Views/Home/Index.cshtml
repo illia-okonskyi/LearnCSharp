@@ -13,8 +13,8 @@
             <th>Family Name</th>
             <th>Salary</th>
             <th>Other Name</th>
-            <th>In Use</th>
-            <th>Last Updated</th>
+            @*<th>In Use</th>
+                <th>Last Updated</th>*@
             <th></th>
         </tr>
     </thead>
@@ -29,8 +29,8 @@
                 <td>@e.FamilyName</td>
                 <td>@e.Salary</td>
                 <td>@(e.OtherIdentity?.Name ?? "(None)")</td>
-                <td>@(e.OtherIdentity?.InActiveUse.ToString() ?? "(N/A)")</td>
-                <td>@e.LastUpdated.ToLocalTime()</td>
+                @*<td>@(e.OtherIdentity?.InActiveUse.ToString() ?? "(N/A)")</td>
+                    <td>@e.LastUpdated.ToLocalTime()</td>*@
                 <td class="text-right">
                     <form>
                         <input type="hidden" name="SSN" value="@e.SSN" />
@@ -57,6 +57,7 @@
         Page Size: @ViewBag.PageSize bytes
     </h4>
 }
+@await Html.PartialAsync("SecondaryIdentities")
 <div class="text-center">
     <a asp-action="Edit" class="btn btn-primary">Create</a>
 </div>
