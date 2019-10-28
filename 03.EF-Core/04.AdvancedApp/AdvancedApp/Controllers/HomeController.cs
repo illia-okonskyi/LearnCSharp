@@ -92,6 +92,25 @@ namespace AdvancedApp.Controllers
             //        id.PrimarySSN == employee.SSN &&
             //        id.PrimaryFirstName == employee.FirstName &&
             //        id.PrimaryFamilyName == employee.FamilyName);
+
+            // Re-creating Cascade delete behavior for Restrict delete behavior. We already have
+            // all requred data (OtherIdentity.Id property) delivered from the MVC model binder
+            //if (employee.OtherIdentity != null)
+            //{
+            //    _context.Set<SecondaryIdentity>().Remove(employee.OtherIdentity);
+            //}
+
+            // Re-creating SetNull/ClientSetNull delete behavior for Restrict delete behavior.
+            // We have must have the OtherIdentity.Id property delivered from the MVC model binder
+            if (employee.OtherIdentity != null)
+            {
+                var identity = _context.Set<SecondaryIdentity>().Find(employee.OtherIdentity.Id);
+                identity.PrimarySSN = null;
+                identity.PrimaryFirstName = null;
+                identity.PrimaryFamilyName = null;
+            }
+            employee.OtherIdentity = null;
+
             _context.Remove(employee);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
