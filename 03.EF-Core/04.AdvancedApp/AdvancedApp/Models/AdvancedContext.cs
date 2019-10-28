@@ -58,7 +58,8 @@ namespace AdvancedApp.Models
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
             
             // Declared shadow property. No attribute alternative is available
-            modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated");
+            modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated")
+                .HasDefaultValue(new DateTime(2000, 1, 1));
 
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)

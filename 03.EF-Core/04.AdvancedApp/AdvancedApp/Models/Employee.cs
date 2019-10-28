@@ -24,5 +24,7 @@ namespace AdvancedApp.Models
         public SecondaryIdentity OtherIdentity { get; set; }
 
         public bool SoftDeleted { get; set; } = false;
+
+        public DateTime LastUpdated { get; set; }
     }
 }

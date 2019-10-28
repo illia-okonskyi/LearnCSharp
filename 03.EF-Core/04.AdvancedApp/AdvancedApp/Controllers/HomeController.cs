@@ -59,7 +59,6 @@ namespace AdvancedApp.Controllers
 
             if (!hasExisting)
             {
-                _context.Entry(employee).Property("LastUpdated").CurrentValue = System.DateTime.Now;
                 _context.Add(employee);
             }
             else
