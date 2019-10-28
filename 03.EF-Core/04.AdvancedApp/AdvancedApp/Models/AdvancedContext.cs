@@ -40,7 +40,21 @@ namespace AdvancedApp.Models
             modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });
 
             // Attribute alternative is [Column(TypeName = "decimal(8, 2)")]
-            modelBuilder.Entity<Employee>().Property(e => e.Salary).HasColumnType("decimal(8,2)");
+            // For backing fileds there is no attribute alternative
+            // NOTE: PropertyAccessMode enum values:
+            //       - FieldDuringConstruction - This is the default behavior and tells Entity
+            //                                   Framework Core to use the backing field when first
+            //                                   creating the object and then to use the property
+            //                                   for all other operations, including change
+            //                                   detection.
+            //       - Field - This value tells Entity Framework Core to ignore the property and
+            //                 always use the backing field.
+            //       - Property - This value tells Entity Framework Core to always use the property
+            //                    and ignore the backing field.
+            modelBuilder.Entity<Employee>().Property(e => e.Salary)
+                .HasColumnType("decimal(8,2)")
+                .HasField("databaseSalary")
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
 
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
