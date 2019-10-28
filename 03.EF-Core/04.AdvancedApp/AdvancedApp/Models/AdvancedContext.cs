@@ -39,11 +39,17 @@ namespace AdvancedApp.Models
             modelBuilder.Entity<Employee>().Ignore(e => e.Id);
             modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });
 
+            // Attribute alternative is [Column(TypeName = "decimal(8, 2)")]
+            modelBuilder.Entity<Employee>().Property(e => e.Salary).HasColumnType("decimal(8,2)");
+
             modelBuilder.Entity<SecondaryIdentity>()
                 .HasOne(s => s.PrimaryIdentity)
                 .WithOne(e => e.OtherIdentity)
                 .HasPrincipalKey<Employee>(e => new { e.SSN, e.FirstName, e.FamilyName})
                 .HasForeignKey<SecondaryIdentity>(s => new { s.PrimarySSN, s.PrimaryFirstName, s.PrimaryFamilyName});
+
+            // Attribute alternative is [MaxLength]
+            modelBuilder.Entity<SecondaryIdentity>().Property(e => e.Name).HasMaxLength(100);
         }
     }
 }
