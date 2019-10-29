@@ -11,7 +11,8 @@ namespace AdvancedApp.Models
             // Configure default change-tracking behavior for all the requests
             //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-
+            // Configure auto transactions
+            Database.AutoTransactionsEnabled = false;
         }
 
         public DbSet<Employee> Employees { get; set; }
