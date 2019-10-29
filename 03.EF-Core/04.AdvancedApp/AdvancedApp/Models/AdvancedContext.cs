@@ -63,10 +63,22 @@ namespace AdvancedApp.Models
             modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated")
                 .HasDefaultValue(new DateTime(2000, 1, 1));
 
+            // NOTE: Sequence configuration methods
+            //       - StartsAt - This method is used to specify the starting value for the
+            //                    sequence.
+            //       - IncrementsBy - This method is used to specify the amount by which the
+            //                        sequence is incremented after a value is generated.
+            //       - IsCyclic - This method is used to specify whether the sequence starts over
+            //                    when the maximum value is reached.
+            //       - HasMax - This method is used to specify a maximum value for the sequence.
+            //       - HasMin - This method is used to specify a minimum value for the sequence.
+            modelBuilder.HasSequence<int>("ReferenceSequence")
+                .StartsAt(100)
+                .IncrementsBy(2);
             // Default values can be genereted by the database server. No attribute alternative is
             // available
             modelBuilder.Entity<Employee>().Property(e => e.GeneratedValue)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValueSql(@"'REFERENCE_'+ CONVERT(varchar, NEXT VALUE FOR ReferenceSequence)");
 
             // Attribute alternative is [TimeStamp] attribute. Row version property must be byte[]
             // type to avoid formatting issues
