@@ -63,5 +63,13 @@ namespace AdvancedApp.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public IActionResult RestoreAll()
+        {
+            // Calling stored procedures that doesn't return data can be done this way
+            _context.Database.ExecuteSqlCommand("EXECUTE RestoreSoftDelete");
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
