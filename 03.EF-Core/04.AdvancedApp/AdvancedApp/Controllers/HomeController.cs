@@ -33,10 +33,20 @@ namespace AdvancedApp.Controllers
 
         public HomeController(AdvancedContext context) => _context = context;
 
-        public IActionResult Index(string searchTerm)
+        public IActionResult Index(decimal salary = 0)
         {
-            IEnumerable<Employee> data = _context.Employees
+            //IEnumerable<Employee> data = _context.Employees
+            //    .Include(e => e.OtherIdentity)
+            //    .OrderByDescending(e => e.LastUpdated)
+            //    .ToArray();
+
+            // Note that FromSql() doesn't forward relations even if you include JOIN statement in
+            // the query
+            IEnumerable<Employee> data = _context.Employees.
+                FromSql($@"SELECT * FROM Employees
+                           WHERE SoftDeleted = 0 AND Salary > {salary}")
                 .Include(e => e.OtherIdentity)
+                .OrderByDescending(e => e.Salary)
                 .OrderByDescending(e => e.LastUpdated)
                 .ToArray();
             ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
