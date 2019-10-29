@@ -65,7 +65,9 @@ namespace AdvancedApp.Models
 
             // Attribute alternative is [TimeStamp] attribute. Row version property must be byte[]
             // type to avoid formatting issues
-            modelBuilder.Entity<Employee>().Property(e => e.RowVersion).IsRowVersion();
+            // NOTE: RowVersion data type can not be included table-valued functions
+            //modelBuilder.Entity<Employee>().Property(e => e.RowVersion).IsRowVersion();
+            modelBuilder.Entity<Employee>().Ignore(e => e.RowVersion);
 
             // The OnDelete() FluentAPI method configures delete behavior for entity.
             // There is no attribute alternative

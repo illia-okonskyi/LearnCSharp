@@ -57,11 +57,20 @@ namespace AdvancedApp.Controllers
             //    .IgnoreQueryFilters();
 
             // Using the view
+            //IEnumerable<Employee> data = _context.Employees
+            //    .FromSql($@"SELECT * from NotDeletedView
+            //                WHERE Salary > {salary}")
+            //    .Include(e => e.OtherIdentity)
+            //    .OrderByDescending(e => e.Salary)
+            //    .OrderByDescending(e => e.LastUpdated)
+            //    .IgnoreQueryFilters()
+            //    .ToArray();
+            //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+
+            // Calling the table-valued function
             IEnumerable<Employee> data = _context.Employees
-                .FromSql($@"SELECT * from NotDeletedView
-                            WHERE Salary > {salary}")
+                .FromSql($@"SELECT * from GetSalaryTable({salary})")
                 .Include(e => e.OtherIdentity)
-                .OrderByDescending(e => e.Salary)
                 .OrderByDescending(e => e.LastUpdated)
                 .IgnoreQueryFilters()
                 .ToArray();
