@@ -52,9 +52,20 @@ namespace AdvancedApp.Controllers
             //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
 
             // EF Core cannot compose complex queries using stored procedures
+            //IEnumerable<Employee> data = _context.Employees
+            //    .FromSql($"Execute GetBySalary @SalaryFilter = {salary}")
+            //    .IgnoreQueryFilters();
+
+            // Using the view
             IEnumerable<Employee> data = _context.Employees
-                .FromSql($"Execute GetBySalary @SalaryFilter = {salary}")
-                .IgnoreQueryFilters();
+                .FromSql($@"SELECT * from NotDeletedView
+                            WHERE Salary > {salary}")
+                .Include(e => e.OtherIdentity)
+                .OrderByDescending(e => e.Salary)
+                .OrderByDescending(e => e.LastUpdated)
+                .IgnoreQueryFilters()
+                .ToArray();
+            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
             return View(data);
         }
 
