@@ -63,6 +63,11 @@ namespace AdvancedApp.Models
             modelBuilder.Entity<Employee>().Property<DateTime>("LastUpdated")
                 .HasDefaultValue(new DateTime(2000, 1, 1));
 
+            // Default values can be genereted by the database server. No attribute alternative is
+            // available
+            modelBuilder.Entity<Employee>().Property(e => e.GeneratedValue)
+                .HasDefaultValueSql("GETDATE()");
+
             // Attribute alternative is [TimeStamp] attribute. Row version property must be byte[]
             // type to avoid formatting issues
             // NOTE: RowVersion data type can not be included table-valued functions

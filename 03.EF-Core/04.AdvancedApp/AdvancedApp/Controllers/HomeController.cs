@@ -35,10 +35,12 @@ namespace AdvancedApp.Controllers
 
         public IActionResult Index(decimal salary = 0)
         {
-            //IEnumerable<Employee> data = _context.Employees
-            //    .Include(e => e.OtherIdentity)
-            //    .OrderByDescending(e => e.LastUpdated)
-            //    .ToArray();
+            IEnumerable<Employee> data = _context.Employees
+                .Include(e => e.OtherIdentity)
+                .OrderByDescending(e => e.LastUpdated)
+                .IgnoreQueryFilters()
+                .ToArray();
+            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
 
             // Note that FromSql() doesn't forward relations even if you include JOIN statement in
             // the query
@@ -68,13 +70,13 @@ namespace AdvancedApp.Controllers
             //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
 
             // Calling the table-valued function
-            IEnumerable<Employee> data = _context.Employees
-                .FromSql($@"SELECT * from GetSalaryTable({salary})")
-                .Include(e => e.OtherIdentity)
-                .OrderByDescending(e => e.LastUpdated)
-                .IgnoreQueryFilters()
-                .ToArray();
-            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+            //IEnumerable<Employee> data = _context.Employees
+            //    .FromSql($@"SELECT * from GetSalaryTable({salary})")
+            //    .Include(e => e.OtherIdentity)
+            //    .OrderByDescending(e => e.LastUpdated)
+            //    .IgnoreQueryFilters()
+            //    .ToArray();
+            //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
             return View(data);
         }
 
