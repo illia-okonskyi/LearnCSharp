@@ -42,14 +42,19 @@ namespace AdvancedApp.Controllers
 
             // Note that FromSql() doesn't forward relations even if you include JOIN statement in
             // the query
-            IEnumerable<Employee> data = _context.Employees.
-                FromSql($@"SELECT * FROM Employees
-                           WHERE SoftDeleted = 0 AND Salary > {salary}")
-                .Include(e => e.OtherIdentity)
-                .OrderByDescending(e => e.Salary)
-                .OrderByDescending(e => e.LastUpdated)
-                .ToArray();
-            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+            //IEnumerable<Employee> data = _context.Employees.
+            //    FromSql($@"SELECT * FROM Employees
+            //               WHERE SoftDeleted = 0 AND Salary > {salary}")
+            //    .Include(e => e.OtherIdentity)
+            //    .OrderByDescending(e => e.Salary)
+            //    .OrderByDescending(e => e.LastUpdated)
+            //    .ToArray();
+            //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+
+            // EF Core cannot compose complex queries using stored procedures
+            IEnumerable<Employee> data = _context.Employees
+                .FromSql($"Execute GetBySalary @SalaryFilter = {salary}")
+                .IgnoreQueryFilters();
             return View(data);
         }
 
