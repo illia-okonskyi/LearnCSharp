@@ -33,14 +33,14 @@ namespace AdvancedApp.Controllers
 
         public HomeController(AdvancedContext context) => _context = context;
 
-        public IActionResult Index(decimal salary = 0)
+        public IActionResult Index(string searchTerm)
         {
-            IEnumerable<Employee> data = _context.Employees
-                .Include(e => e.OtherIdentity)
-                .OrderByDescending(e => e.LastUpdated)
-                .IgnoreQueryFilters()
-                .ToArray();
-            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+            //IEnumerable<Employee> data = _context.Employees
+            //    .Include(e => e.OtherIdentity)
+            //    .OrderByDescending(e => e.LastUpdated)
+            //    .IgnoreQueryFilters()
+            //    .ToArray();
+            //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
 
             // Note that FromSql() doesn't forward relations even if you include JOIN statement in
             // the query
@@ -77,6 +77,15 @@ namespace AdvancedApp.Controllers
             //    .IgnoreQueryFilters()
             //    .ToArray();
             //ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
+
+            // Using computed column for selecting the data
+            IQueryable<Employee> query = _context.Employees.Include(e => e.OtherIdentity);
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(e => EF.Functions.Like(e.GeneratedValue, searchTerm));
+            }
+            IEnumerable<Employee> data = query.ToArray();
+            ViewBag.Secondaries = data.Select(e => e.OtherIdentity);
             return View(data);
         }
 

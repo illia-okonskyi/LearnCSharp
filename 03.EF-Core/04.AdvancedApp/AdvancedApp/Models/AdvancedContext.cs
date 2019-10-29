@@ -77,8 +77,15 @@ namespace AdvancedApp.Models
                 .IncrementsBy(2);
             // Default values can be genereted by the database server. No attribute alternative is
             // available
+            //modelBuilder.Entity<Employee>().Property(e => e.GeneratedValue)
+            //    .HasDefaultValueSql(@"'REFERENCE_'+ CONVERT(varchar, NEXT VALUE FOR ReferenceSequence)");
+
+            // Computed columns are configured using the HasComputedColumnSql method, which
+            // receives a SQL expression that will be used to generate the property values.
+            // No attribute alternative is avilable
             modelBuilder.Entity<Employee>().Property(e => e.GeneratedValue)
-                .HasDefaultValueSql(@"'REFERENCE_'+ CONVERT(varchar, NEXT VALUE FOR ReferenceSequence)");
+                .HasComputedColumnSql(@"SUBSTRING(FirstName, 1, 1) + FamilyName PERSISTED");
+            modelBuilder.Entity<Employee>().HasIndex(e => e.GeneratedValue);
 
             // Attribute alternative is [TimeStamp] attribute. Row version property must be byte[]
             // type to avoid formatting issues
