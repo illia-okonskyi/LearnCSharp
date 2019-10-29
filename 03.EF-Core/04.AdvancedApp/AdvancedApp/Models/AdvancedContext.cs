@@ -35,7 +35,7 @@ namespace AdvancedApp.Models
             //       implement a “soft delete” feature that marks objects that are deleted without
             //       removing them from the database, allowing data to be restored if it has been
             //       deleted by mistake.
-            modelBuilder.Entity<Employee>().HasQueryFilter(e => !e.SoftDeleted);
+            //modelBuilder.Entity<Employee>().HasQueryFilter(e => !e.SoftDeleted);
 
             modelBuilder.Entity<Employee>().Ignore(e => e.Id);
             modelBuilder.Entity<Employee>().HasKey(e => new { e.SSN, e.FirstName, e.FamilyName });

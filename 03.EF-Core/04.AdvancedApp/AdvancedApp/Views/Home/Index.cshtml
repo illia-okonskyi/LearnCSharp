@@ -37,7 +37,7 @@
                         <input type="hidden" name="Firstname" value="@e.FirstName" />
                         <input type="hidden" name="FamilyName" value="@e.FamilyName" />
                         <input type="hidden" name="RowVersion" asp-for="@e.RowVersion" />
-                        <input type="hidden" name="OtherIdentity.Id" value="@e.OtherIdentity.Id" />
+                        <input type="hidden" name="OtherIdentity.Id" value="@e.OtherIdentity?.Id" />
                         <button type="submit" asp-action="Delete" formmethod="post"
                                 class="btn btn-sm btn-danger">
                             Delete
@@ -58,7 +58,10 @@
         Page Size: @ViewBag.PageSize bytes
     </h4>
 }
-@await Html.PartialAsync("SecondaryIdentities")
+@if (ViewBag.Secondaries != null)
+{
+    @await Html.PartialAsync("SecondaryIdentities")
+}
 <div class="text-center">
     <a asp-action="Edit" class="btn btn-primary">Create</a>
 </div>

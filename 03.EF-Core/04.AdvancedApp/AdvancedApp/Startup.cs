@@ -29,8 +29,9 @@ namespace AdvancedApp
             //      https://docs.microsoft.com/en-us/ef/core/api/microsoft.entityframeworkcore.infrastructure.relationaleventid
             string connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<AdvancedContext>(options =>
-                options.UseSqlServer(connectionString).ConfigureWarnings(warning =>
-                    warning.Throw(RelationalEventId.QueryClientEvaluationWarning))
+                options.UseSqlServer(connectionString)
+                    //.ConfigureWarnings(warning =>
+                    //    warning.Throw(RelationalEventId.QueryClientEvaluationWarning))
             );
         }
 
